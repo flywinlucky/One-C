@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ON CREDIT - Credite Descentralizate Web3</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base */
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #0a1833;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3 { font-family: 'Poppins', Arial, sans-serif; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      background: rgba(10,24,51,0.95);
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      transition: background 0.3s;
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-size: 2rem; font-weight: 700;
+      color: #38ffb3;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      display: flex; gap: 32px; list-style: none; margin: 0; padding: 0;
+    }
+    nav li a {
+      font-size: 1rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav li a:hover { color: #38ffb3; }
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      background: linear-gradient(120deg, #0a1833 60%, #38ffb3 200%);
+      overflow: hidden;
+      padding-top: 72px;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: heroFadeIn 1.2s cubic-bezier(.23,1.01,.32,1) both;
+    }
+    .hero h1 {
+      font-size: 2.7rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      color: #fff;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 24px #38ffb3a0;
+      opacity: 0;
+      filter: blur(8px);
+      animation: titleAppear 1.2s 0.1s cubic-bezier(.23,1.01,.32,1) forwards;
+    }
+    @keyframes heroFadeIn {
+      from { opacity: 0; filter: blur(10px);}
+      to { opacity: 1; filter: blur(0);}
+    }
+    @keyframes titleAppear {
+      0% { opacity: 0; filter: blur(8px);}
+      60% { opacity: 1; filter: blur(2px);}
+      100% { opacity: 1; filter: blur(0);}
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: #b6ffe2;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeInUp 1s 0.7s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    #particles-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.6;
+      /* No blur for performance */
+    }
+
+    /* Section titles */
+    section { padding: 96px 0 64px 0; }
+    section h2 {
+      font-size: 2.2rem;
+      color: #38ffb3;
+      margin-bottom: 32px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* How it works */
+    .steps, .benefits {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 32px;
+      margin-top: 32px;
+      width: 100%;
+    }
+    .step, .benefit {
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 32px 24px;
+      width: 320px;
+      min-width: 220px;
+      max-width: 95vw;
+      text-align: center;
+      box-shadow: 0 2px 24px #38ffb320;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .step:hover, .benefit:hover { transform: scale(1.04); box-shadow: 0 4px 32px #38ffb340;}
+    .step-icon, .benefit-icon {
+      font-size: 2.5rem;
+      margin-bottom: 18px;
+      color: #38ffb3;
+    }
+    .step-title, .benefit-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    /* Testimoniale */
+    .testimonials-slider {
+      position: relative;
+      max-width: 600px;
+      margin: 0 auto;
+  
+    }
+    .testimonial {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 36px 28px 28px 28px;
+      text-align: center;
+      box-shadow: 0 2px 24px #38ffb320;
+      min-height: 180px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s, transform 0.7s;
+      position: absolute; left: 0; top: 0; width: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .testimonial.active {
+      opacity: 1;
+      transform: translateY(0);
+      position: relative;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .testimonial-user {
+      margin-top: 18px;
+      font-weight: 600;
+      color: #38ffb3;
+      font-size: 1.05rem;
+    }
+    .testimonial-stars {
+      color: #ffe066;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    .slider-controls {
+      display: flex; justify-content: center; gap: 18px; margin-top: 18px;
+    }
+    .slider-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #38ffb3; opacity: 0.4; cursor: pointer;
+      border: none; outline: none;
+      transition: opacity 0.2s;
+    }
+    .slider-dot.active { opacity: 1; }
+    /* CTA final */
+    .cta-final {
+      text-align: center;
+      margin-top: 32px;
+      padding: 48px 0 0 0;
+      position: relative;
+    }
+    .cta-final h2 {
+      color: #fff;
+      margin-bottom: 18px;
+      font-size: 2rem;
+    }
+    .cta-final .btn-primary {
+      font-size: 1.1rem;
+      padding: 16px 40px;
+    }
+    /* Footer */
+    footer {
+      background: #0a1833;
+      color: #b6ffe2;
+      padding: 36px 0 18px 0;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 48px;
+      border-top: 1.5px solid #38ffb3;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 32px; margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #38ffb3; font-weight: 600; font-size: 1rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-social {
+      margin-top: 10px;
+    }
+    .footer-social a {
+      color: #38ffb3; margin: 0 8px; font-size: 1.3rem; vertical-align: middle;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: #fff; }
+    /* Modal */
+    .modal-bg {
+      display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(10,24,51,0.85); z-index: 9999;
+      align-items: center; justify-content: center;
+    }
+    .modal-bg.active { display: flex; }
+    .modal {
+      background: #fff;
+      color: #0a1833;
+      border-radius: 18px;
+      padding: 36px 32px 28px 32px;
+      min-width: 320px; max-width: 95vw;
+      box-shadow: 0 8px 48px #38ffb340;
+      position: relative;
+      animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+    }
+    .modal h3 { margin-top: 0; color: #0a1833; }
+    .modal label { display: block; margin-bottom: 6px; font-weight: 600;}
+    .modal input {
+      width: 100%; padding: 10px 0px; border-radius: 8px;
+      border: 1.5px solid #38ffb3; margin-bottom: 18px;
+      font-size: 1rem;
+    }
+    .modal .btn-primary {
+      width: 100%; margin-top: 8px;
+    }
+    .modal .close-modal {
+      position: absolute; top: 12px; right: 18px;
+      background: none; border: none; font-size: 1.5rem; color: #0a1833;
+      cursor: pointer;
+    }
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* AOS-like fade-in */
+    .aos { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s;}
+    .aos.aos-animate { opacity: 1; transform: translateY(0);}
+    /* Responsive */
+    @media (max-width: 900px) {
+      .steps, .benefits { flex-direction: column; align-items: center; }
+      .step, .benefit { width: 95%; min-width: unset; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2rem;}
+      .hero-content { padding: 0 8px;}
+      .step, .benefit { padding: 20px 10px;}
+      .modal { padding: 24px 10px;}
+      .container { padding: 0 8px;}
+      nav ul { gap: 18px;}
+      .nav { height: 56px;}
+      header { height: 56px;}
+      section { padding: 64px 0 32px 0;}
+    }
+    /* Hamburger menu for mobile */
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px;}
+    .hamburger span { width: 28px; height: 3px; background: #38ffb3; border-radius: 2px;}
+    @media (max-width: 700px) {
+      nav ul { display: none; position: absolute; top: 56px; right: 0; background: #0a1833; flex-direction: column; width: 180px; box-shadow: 0 4px 24px #38ffb340; border-radius: 0 0 12px 12px;}
+      nav ul.open { display: flex;}
+      .hamburger { display: flex;}
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #38ffb3 0%, #00e6c3 100%);
+      color: #0a1833;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 32px;
+      padding: 18px 48px;
+      cursor: pointer;
+      box-shadow: 0 4px 32px #38ffb370;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #38ffb3; transform: translateY(-2px) scale(1.03);}
+
+    /* Testimoniale - noua sectiune */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-top: 32px;
+      justify-items: center;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 32px 20px 24px 20px;
+      box-shadow: 0 2px 24px #38ffb320;
+      text-align: center;
+      min-width: 0;
+      max-width: 320px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .testimonial-card.aos-animate {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s, transform 0.8s;
+    }
+    .testimonial-user {
+      font-weight: 700;
+      color: #38ffb3;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .testimonial-stars {
+      color: #ffe066;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+    }
+    .testimonial-desc {
+      color: #fff;
+      font-size: 1rem;
+      font-style: italic;
+      margin-top: 8px;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 4px 32px #38ffb340;
+    }
+    /* Responsive grid */
+    @media (max-width: 1100px) {
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr);}
+    }
+    @media (max-width: 700px) {
+      .testimonials-grid { grid-template-columns: 1fr;}
+      .testimonial-card { max-width: 95vw;}
+    }
+    .testimonial-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px #38ffb340;
+      border: 2px solid #38ffb3;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo">ON CREDIT</div>
+      <nav>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+        <ul id="nav-menu">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#how">Cum Funcționează</a></li>
+          <li><a href="#benefits">Beneficii</a></li>
+          <li><a href="#cta-final">Începe Acum</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <canvas id="particles-bg"></canvas>
+    <div class="hero-content">
+      <h1>Ia un Credit Descentralizat în Câteva Secunde</h1>
+      <p>Fără bănci. Fără scoruri de credit. Doar tu și libertatea financiară.</p>
+      <button class="btn-primary" id="apply-btn">Aplică Acum</button>
+    </div>
+  </section>
+  <!-- Cum funcționează -->
+  <section id="how">
+    <h2 class="aos">Cum Funcționează?</h2>
+    <div class="steps">
+      <div class="step aos" data-aos-delay="0">
+        <div class="step-icon">🔗</div>
+        <div class="step-title">1. Conectează-ți portofelul</div>
+        <div>Conectează rapid portofelul tău Web3 pentru a începe.</div>
+      </div>
+      <div class="step aos" data-aos-delay="100">
+        <div class="step-icon">💸</div>
+        <div class="step-title">2. Alege suma și tipul de garanție</div>
+        <div>Selectează suma dorită și depune garanția on-chain.</div>
+      </div>
+      <div class="step aos" data-aos-delay="200">
+        <div class="step-icon">⚡</div>
+        <div class="step-title">3. Primește banii instant</div>
+        <div>Primești creditul direct în portofel, fără așteptare.</div>
+      </div>
+    </div>
+  </section>
+  <!-- Beneficii -->
+  <section id="benefits">
+    <h2 class="aos">Beneficii</h2>
+    <div class="benefits">
+      <div class="benefit aos" data-aos-delay="0">
+        <div class="benefit-icon">💰</div>
+        <div class="benefit-title">Dobândă de la doar 1,5% pe an</div>
+        <div>Profită de cele mai mici dobânzi din piață.</div>
+      </div>
+      <div class="benefit aos" data-aos-delay="100">
+        <div class="benefit-icon">🛡️</div>
+        <div class="benefit-title">Fără intermediari</div>
+        <div>Totul 100% descentralizat, fără bănci sau brokeri.</div>
+      </div>
+      <div class="benefit aos" data-aos-delay="200">
+        <div class="benefit-icon">💧</div>
+        <div class="benefit-title">Lichiditate instant</div>
+        <div>Primești banii imediat, fără birocrație.</div>
+      </div>
+      <div class="benefit aos" data-aos-delay="300">
+        <div class="benefit-icon">🔒</div>
+        <div class="benefit-title">Garanții sigure, 100% on-chain</div>
+        <div>Activele tale sunt protejate pe blockchain.</div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimoniale -->
+  <section id="testimonials">
+    <h2 class="aos">Ce spun utilizatorii</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card aos" data-aos-delay="0">
+        <img src="Resources/Reviews Avatars/Icon_1.png" alt="Andrei P." class="testimonial-avatar">
+        <div class="testimonial-user">Andrei P., București</div>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-desc">"Am primit creditul în 30 de secunde, fără niciun stres. Platforma e genială!"</div>
+      </div>
+      <div class="testimonial-card aos" data-aos-delay="100">
+        <img src="Resources/Reviews Avatars/Icon_2.png" alt="Ioana M." class="testimonial-avatar">
+        <div class="testimonial-user">Ioana M., Cluj</div>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-desc">"Dobânzile sunt incredibil de mici, iar totul e transparent. Recomand!"</div>
+      </div>
+      <div class="testimonial-card aos" data-aos-delay="200">
+        <img src="Resources/Reviews Avatars/Icon_3.png" alt="Mihai R." class="testimonial-avatar">
+        <div class="testimonial-user">Mihai R., Timișoara</div>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-desc">"E viitorul finanțelor. Am garantat cu crypto și am primit banii instant."</div>
+      </div>
+      <div class="testimonial-card aos" data-aos-delay="300">
+        <img src="Resources/Reviews Avatars/Icon_4.png" alt="Elena S." class="testimonial-avatar">
+        <div class="testimonial-user">Elena S., Iași</div>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-desc">"Proces rapid, fără birocrație. Recomand tuturor care au nevoie de lichiditate!"</div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA final -->
+  <section class="cta-final aos" id="cta-final">
+    <h2>Începe chiar acum și obține libertatea financiară!</h2>
+    <button class="btn-primary" id="apply-btn-2">Aplică Acum</button>
+  </section>
+  <!-- Modal -->
+  <div class="modal-bg" id="modal-bg">
+    <div class="modal">
+      <button class="close-modal" id="close-modal">&times;</button>
+      <h3>Aplică pentru un Credit</h3>
+      <form id="loan-form" autocomplete="off">
+        <label for="nume">Nume complet</label>
+        <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion">
+
+        <label for="country">Țara</label>
+        <input type="text" id="country" name="country" required placeholder="Ex: România">
+
+        <label for="lucreaza">Lucrezi în prezent?</label>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+          <label style="display:flex;align-items:flex-start;gap:6px;cursor:pointer;">
+            <input type="radio" name="lucreaza" value="Da" required style="accent-color:#38ffb3;"> Da
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:6px;cursor:pointer;">
+            <input type="radio" name="lucreaza" value="Nu" required style="accent-color:#38ffb3;"> Nu
+          </label>
+        </div>
+
+        <label for="suma">Sumă dorită (USDT)</label>
+        <input type="number" id="suma" name="suma" min="10" max="100000" required placeholder="Ex: 500">
+
+        <label for="telegram">Link către Telegram</label>
+        <input type="url" id="telegram" name="telegram" required placeholder="https://t.me/username">
+
+        <button type="submit" class="btn-primary">Trimite Cererea</button>
+      </form>
+      <div id="form-success" style="display:none; margin-top:18px; color:#38b36a; font-weight:600;">
+        Cererea a fost trimisă! Vei fi contactat în curând.
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#how">Cum Funcționează</a>
+      <a href="#benefits">Beneficii</a>
+      <a href="#cta-final">Începe Acum</a>
+      <a href="mailto:contact@oncredit.xyz">Contact</a>
+    </div>
+    <div class="footer-social">
+      <a href="#" title="Twitter"><span aria-hidden="true">🐦</span></a>
+      <a href="#" title="Telegram"><span aria-hidden="true">💬</span></a>
+      <a href="#" title="Discord"><span aria-hidden="true">🕹️</span></a>
+    </div>
+    <div style="margin-top:10px;">&copy; 2024 ON CREDIT. Toate drepturile rezervate.</div>
+  </footer>
+  <!-- JS: Animatii, Particule, Modal, Slider, Hamburger -->
+  <script>
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.onclick = () => navMenu.classList.toggle('open');
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', e => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior: 'smooth'});
+          navMenu.classList.remove('open');
+        }
+      });
+    });
+    // AOS-like animation on scroll
+    function animateAOS() {
+      document.querySelectorAll('.aos').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 80) {
+          setTimeout(() => el.classList.add('aos-animate'), Number(el.dataset.aosDelay)||0);
+        }
+      });
+    }
+    window.addEventListener('scroll', animateAOS);
+    window.addEventListener('load', animateAOS);
+
+    // OPTIMIZED Frozen abstract loop effect for hero background
+    const canvas = document.getElementById('particles-bg');
+    function resizeParticles() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resizeParticles);
+
+    // Optimized: fewer blobs, no blur, no filter, only alpha/gradient
+    function drawFrozenAbstract() {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      const w = canvas.width, h = canvas.height;
+      const t = Date.now() * 0.00018;
+      for (let i = 0; i < 4; i++) {
+        const angle = t * (0.7 + i*0.13) + i;
+        const x = w/2 + Math.sin(angle) * (w/3.2 + 30*Math.sin(t+i));
+        const y = h/2 + Math.cos(angle) * (h/3.2 + 30*Math.cos(t-i));
+        const r = 70 + 30*Math.sin(t*1.2+i*0.7);
+        const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+        grad.addColorStop(0, `rgba(56,255,179,0.13)`);
+        grad.addColorStop(0.5, `rgba(56,255,179,0.07)`);
+        grad.addColorStop(1, `rgba(56,255,179,0.01)`);
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2*Math.PI);
+        ctx.fillStyle = grad;
+        ctx.globalAlpha = 0.7;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(drawFrozenAbstract);
+    }
+    function initParticles() {
+      resizeParticles();
+      drawFrozenAbstract();
+    }
+    window.addEventListener('load', initParticles);
+    // Modal logic
+    function openModal() {
+      document.getElementById('modal-bg').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal-bg').classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('loan-form').reset();
+      document.getElementById('form-success').style.display = 'none';
+    }
+    document.getElementById('apply-btn').onclick = openModal;
+    document.getElementById('apply-btn-2').onclick = openModal;
+    document.getElementById('close-modal').onclick = closeModal;
+    document.getElementById('modal-bg').onclick = function(e) {
+      if (e.target === this) closeModal();
+    };
+    // Form submit cu trimitere la Telegram
+    document.getElementById('loan-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const nume = document.getElementById('nume').value.trim();
+      const country = document.getElementById('country').value.trim();
+      const lucreaza = document.querySelector('input[name="lucreaza"]:checked')?.value || '';
+      const suma = document.getElementById('suma').value.trim();
+      const telegram = document.getElementById('telegram').value.trim();
+
+      const text = encodeURIComponent(
+        `🟢 Cerere nouă credit ON CREDIT\n` +
+        `👤 Nume: ${nume}\n` +
+        `🌍 Țara: ${country}\n` +
+        `💼 Lucrează: ${lucreaza}\n` +
+        `💸 Suma dorită: ${suma} USDT\n` +
+        `✈️ Telegram: ${telegram}`
+      );
+      const url = `https://api.telegram.org/bot7891196418:AAGpnA4Pukt85UMjgrvlBX3Unrtpy3EZPoE/sendMessage?chat_id=6953089880&text=${text}`;
+
+      try {
+        await fetch(url);
+      } catch (err) {
+        // Ignoră erorile, doar UX
+      }
+      document.getElementById('form-success').style.display = 'block';
+      setTimeout(closeModal, 2000);
+    };
+
+    // Testimonials slider
+    const testimonials = document.querySelectorAll('.testimonial');
+    const dots = document.querySelectorAll('.slider-dot');
+    let current = 0;
+    function showTestimonial(idx) {
+      testimonials.forEach((t,i) => t.classList.toggle('active', i===idx));
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+      current = idx;
+    }
+    dots.forEach((dot,i) => dot.onclick = () => showTestimonial(i));
+    setInterval(() => showTestimonial((current+1)%testimonials.length), 6000);
+  </script>
+</body>
+</html>
