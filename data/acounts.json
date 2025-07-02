@@ -1,0 +1,20 @@
+[
+  {
+    "nume": "Popescu Ion",
+    "login": "popescu",
+    "password": "12345",
+    "amount": 3250.00
+  },
+  {
+    "nume": "Ionescu Maria",
+    "login": "ionescu",
+    "password": "parola123",
+    "amount": "3e3"
+  },
+  {
+    "nume": "Vasilescu Andrei",
+    "login": "vasilescu",
+    "password": "andrei2024",
+    "amount": 780.75
+  }
+]

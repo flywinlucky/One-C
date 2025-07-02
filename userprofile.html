@@ -183,9 +183,9 @@
   </header>
   <section class="profile-section">
     <div class="profile-card">
-      <h2>Bun venit, 12345!</h2>
+      <h2 id="profile-nume">Bun venit!</h2>
       <div class="profile-label">Balans cont:</div>
-      <div class="profile-balance">3,250.00 USDT</div>
+      <div class="profile-balance" id="profile-amount">0.00 USDT</div>
       <div class="profile-label">Ultima actualizare: 07.06.2024</div>
       <!--<button class="btn-primary" onclick="window.location.href='index.html'">Logout</button>-->
       <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Withdraw</button>
@@ -211,6 +211,15 @@
   </div>
 
   <script>
+    // Încarcă datele din localStorage
+    const user = JSON.parse(localStorage.getItem('userprofile'));
+    if (!user) {
+      window.location.href = 'index.html';
+    } else {
+      document.getElementById('profile-nume').textContent = 'Bun venit, ' + user.nume + '!';
+      document.getElementById('profile-amount').textContent = Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' USDT';
+    }
+
     // Withdraw modal logic
     const withdrawBtn = document.getElementById('withdraw-btn');
     const withdrawModalBg = document.getElementById('withdraw-modal-bg');

@@ -703,13 +703,21 @@
     loginModalBg.onclick = function(e) {
       if (e.target === this) closeLoginModal.onclick();
     };
-    loginForm.onsubmit = function(e) {
+    loginForm.onsubmit = async function(e) {
       e.preventDefault();
       const user = document.getElementById('login-user').value.trim();
       const pass = document.getElementById('login-pass').value.trim();
-      if (user === '12345' && pass === '12345') {
-        window.location.href = 'userprofile.html';
-      } else {
+      try {
+        const res = await fetch('data/acounts.json');
+        const users = await res.json();
+        const found = users.find(u => u.login === user && u.password === pass);
+        if (found) {
+          localStorage.setItem('userprofile', JSON.stringify(found));
+          window.location.href = 'userprofile.html';
+        } else {
+          loginError.style.display = 'block';
+        }
+      } catch {
         loginError.style.display = 'block';
       }
     };
