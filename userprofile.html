@@ -6,18 +6,60 @@
   <title>Profil Utilizator - ON CREDIT</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
-    /* ...copied styles from index.html... */
+    /* GLOBAL STYLES */
     html { scroll-behavior: smooth; }
     body {
       margin: 0; padding: 0;
       font-family: 'Inter', Arial, sans-serif;
-      background: #0a1833;
+      background: linear-gradient(120deg, #0a1833 60%, #38ffb3 200%);
       color: #fff;
       overflow-x: hidden;
+      min-height: 100vh;
     }
     a { color: inherit; text-decoration: none; }
     h1, h2, h3 { font-family: 'Poppins', Arial, sans-serif; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* LOADING SCREEN */
+    #loading-screen {
+      position: fixed;
+      z-index: 99999;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(120deg, #0a1833 60%, #38ffb3 200%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.7s cubic-bezier(.23,1.01,.32,1);
+    }
+    #loading-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      animation: fadeInUp 1s both;
+    }
+    #loading-logo .spinner {
+      width: 54px; height: 54px;
+      border: 5px solid #38ffb3;
+      border-top: 5px solid #0a1833;
+      border-radius: 50%;
+      animation: spin 1.1s linear infinite;
+      margin-bottom: 12px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0);}
+      100% { transform: rotate(360deg);}
+    }
+    #loading-logo span {
+      font-size: 2rem;
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 24px #38ffb3a0;
+    }
+
+    /* HEADER & NAVIGATION */
     header {
       background: rgba(10,24,51,0.95);
       position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
@@ -42,10 +84,55 @@
     }
     nav li a:hover { color: #38ffb3; }
     @media (max-width: 700px) {
-      nav ul { flex-direction: column; gap: 18px;}
-      .nav { height: 56px;}
-      header { height: 56px;}
+      nav ul {
+        background: rgba(10,24,51,0.98);
+        box-shadow: 0 8px 32px #38ffb340;
+        border-radius: 0 0 18px 18px;
+        padding: 24px 0 18px 0;
+        position: absolute;
+        top: 56px; right: 0;
+        width: 220px;
+        min-height: 120px;
+        transition: transform 0.35s cubic-bezier(.23,1.01,.32,1), opacity 0.3s;
+        transform: translateY(-24px) scale(0.98);
+        opacity: 0;
+        pointer-events: none;
+        backdrop-filter: blur(8px);
+      }
+      nav ul.open {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+        animation: navSlideIn 0.4s cubic-bezier(.23,1.01,.32,1);
+      }
+      @keyframes navSlideIn {
+        from { opacity: 0; transform: translateY(-24px) scale(0.98);}
+        to { opacity: 1; transform: translateY(0) scale(1);}
+      }
+      nav ul li {
+        width: 100%;
+        text-align: left;
+        padding: 8px 24px;
+        border-radius: 8px;
+        transition: background 0.18s;
+      }
+      nav ul li a, nav ul li span {
+        display: block;
+        width: 100%;
+        font-size: 1.08rem;
+        padding: 8px 0;
+      }
+      nav ul li:hover {
+        background: rgba(56,255,179,0.08);
+      }
     }
+    nav ul.open {
+      box-shadow: 0 8px 32px #38ffb370, 0 0 0 2px #38ffb3;
+      border: 1.5px solid #38ffb3;
+    }
+
+    /* PROFILE & TRANSACTIONS SECTION */
     .profile-section {
       margin-top: 120px;
       display: flex;
@@ -63,6 +150,12 @@
       text-align: center;
       max-width: 400px;
       width: 100%;
+      transition: transform 0.25s cubic-bezier(.23,1.01,.32,1), box-shadow 0.25s;
+    }
+    .profile-card:hover {
+      transform: scale(1.035) translateY(-2px);
+      box-shadow: 0 8px 32px #38ffb340, 0 0 0 2px #38ffb3;
+      z-index: 2;
     }
     .profile-balance {
       font-size: 2.2rem;
@@ -84,12 +177,66 @@
       border-radius: 32px;
       padding: 14px 40px;
       cursor: pointer;
-      box-shadow: 0 4px 32px #38ffb370;
-      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 32px #38ffb370, 0 0 0 0 #38ffb3;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
       margin-top: 24px;
     }
-    .btn-primary:hover { background: #38ffb3; transform: translateY(-2px) scale(1.03);}
-    /* Modal styles */
+    .btn-primary:after {
+      content: "";
+      position: absolute;
+      left: -60%; top: 0; width: 220%; height: 100%;
+      background: linear-gradient(120deg,rgba(56,255,179,0.13) 0%,rgba(56,255,179,0.05) 100%);
+      z-index: 1;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      opacity: 0.7;
+      animation: btnShine 2.5s linear infinite;
+    }
+    @keyframes btnShine {
+      0% { left: -60%;}
+      100% { left: 100%;}
+    }
+    .transactions-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+    .transactions-panel {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 32px 24px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 2px 24px #38ffb320;
+      text-align: center;
+      transition: transform 0.25s cubic-bezier(.23,1.01,.32,1), box-shadow 0.25s;
+    }
+    .transactions-panel:hover {
+      transform: scale(1.035) translateY(-2px);
+      box-shadow: 0 8px 32px #38ffb340, 0 0 0 2px #38ffb3;
+      z-index: 2;
+    }
+    .transactions-panel h3 {
+      color: #38ffb3;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.3rem;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 700;
+    }
+    .transactions-empty {
+      color: #b6ffe2;
+      font-size: 1.1rem;
+      padding: 24px 0;
+      font-style: italic;
+    }
+
+    /* MODAL STYLES */
     .modal-bg {
       position: fixed;
       top: 0;
@@ -101,12 +248,15 @@
       align-items: center;
       justify-content: center;
       z-index: 200;
+      backdrop-filter: blur(8px);
     }
     .modal {
       background: #fff;
       border-radius: 12px;
       padding: 24px;
-      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 48px #38ffb340, 0 0 0 2px #38ffb3;
+      border: 1.5px solid #38ffb3;
+      background: linear-gradient(120deg, #fff 80%, #38ffb3 200%);
       position: relative;
     }
     .close-modal {
@@ -164,37 +314,8 @@
     .modal .error {
       color: #e74c3c;
     }
-    .transactions-section {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      margin-top: 32px;
-      margin-bottom: 32px;
-    }
-    .transactions-panel {
-      background: rgba(255,255,255,0.04);
-      border: 1.5px solid #38ffb3;
-      border-radius: 18px;
-      padding: 32px 24px;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 0 2px 24px #38ffb320;
-      text-align: center;
-    }
-    .transactions-panel h3 {
-      color: #38ffb3;
-      margin-top: 0;
-      margin-bottom: 18px;
-      font-size: 1.3rem;
-      font-family: 'Poppins', Arial, sans-serif;
-      font-weight: 700;
-    }
-    .transactions-empty {
-      color: #b6ffe2;
-      font-size: 1.1rem;
-      padding: 24px 0;
-      font-style: italic;
-    }
+
+    /* FOOTER STYLES */
     footer {
       background: #0a1833;
       color: #b6ffe2;
@@ -221,9 +342,44 @@
       transition: color 0.2s;
     }
     .footer-social a:hover { color: #fff; }
+
+    /* IMPROVED RESPONSIVE */
+    @media (max-width: 600px) {
+      .profile-card, .transactions-panel { padding: 16px 6px;}
+      .modal { padding: 18px 4px;}
+      .container { padding: 0 4px;}
+      nav ul { gap: 10px;}
+      .nav { height: 56px;}
+      header { height: 56px;}
+      .btn-primary { font-size: 1rem; padding: 12px 18px;}
+      .profile-section { margin-top: 70px;}
+    }
+
+    /* Subtle background gradient for body */
+    body:before {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 60% 10%,rgba(56,255,179,0.08) 0,rgba(56,255,179,0.01) 80%,transparent 100%);
+      animation: bgMove 12s linear infinite alternate;
+    }
+    @keyframes bgMove {
+      0% { background-position: 60% 10%;}
+      100% { background-position: 40% 90%;}
+    }
   </style>
 </head>
 <body>
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <div id="loading-logo">
+      <div class="spinner"></div>
+      <span>ON CREDIT</span>
+    </div>
+  </div>
+
   <header>
     <div class="container nav">
       <div class="logo">ON CREDIT</div>
@@ -308,6 +464,16 @@
   </div>
 
   <script>
+    // LOADING SCREEN LOGIC
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(() => {
+          document.getElementById('loading-screen').style.display = 'none';
+        }, 700);
+      }, 900);
+    });
+
     // Încarcă datele din localStorage
     const user = JSON.parse(localStorage.getItem('userprofile'));
     if (!user) {
