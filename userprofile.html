@@ -172,11 +172,11 @@
       <div class="logo">ON CREDIT</div>
       <nav>
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <!--<li><a href="index.html#how">Cum Funcționează</a></li>
-          <li><a href="index.html#benefits">Beneficii</a></li>
-          <li><a href="index.html#cta-final">Începe Acum</a></li>-->
-          <li><a href="index.html">Logout</a></li>
+          <li>
+            <li><a href="index.html">Home</a></li>
+            <span id="user-info" style="font-weight:600; color:#38ffb3;"></span>
+            <a href="#" id="logout-link">Logout</a>
+          </li>
         </ul>
       </nav>
     </div>
@@ -210,6 +210,17 @@
       </div>
     </div>
   </div>
+  <!-- Logout Confirm Modal -->
+  <div class="modal-bg" id="logout-modal-bg" style="display:none;">
+    <div class="modal" style="min-width:320px;max-width:95vw;">
+      <button class="close-modal" id="close-logout-modal" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
+      <h3>Sigur dorești să te deconectezi?</h3>
+      <div style="display:flex;gap:18px;justify-content:center;margin-top:24px;">
+        <button class="btn-primary" id="logout-confirm-yes" style="width:100px;">Da</button>
+        <button class="btn-primary" id="logout-confirm-no" style="width:100px;background:#e74c3c;color:#fff;">Nu</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Încarcă datele din localStorage
@@ -221,8 +232,35 @@
       document.getElementById('profile-amount').textContent =
         Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
         ' ' + (user.currency || 'USDT');
-      document.getElementById('profile-currency').textContent = 'Valută: ' + (user.currency || 'USDT');
+      // Bara sus cu nume și amount
+      document.getElementById('user-info').textContent = user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'USDT') + ')';
     }
+
+    // Logout modal logic
+    const logoutLink = document.getElementById('logout-link');
+    const logoutModalBg = document.getElementById('logout-modal-bg');
+    const closeLogoutModal = document.getElementById('close-logout-modal');
+    const logoutYes = document.getElementById('logout-confirm-yes');
+    const logoutNo = document.getElementById('logout-confirm-no');
+    logoutLink.onclick = function(e) {
+      e.preventDefault();
+      logoutModalBg.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    };
+    closeLogoutModal.onclick = function() {
+      logoutModalBg.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    logoutNo.onclick = function() {
+      logoutModalBg.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    logoutYes.onclick = function() {
+      localStorage.removeItem('userprofile');
+      logoutModalBg.style.display = 'none';
+      document.body.style.overflow = '';
+      window.location.href = 'index.html';
+    };
 
     // Withdraw modal logic
     const withdrawBtn = document.getElementById('withdraw-btn');
