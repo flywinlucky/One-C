@@ -172,8 +172,8 @@
       <div class="logo">ON CREDIT</div>
       <nav>
         <ul>
-          <!--<li><a href="index.html">Home</a></li>
-          <li><a href="index.html#how">Cum Funcționează</a></li>
+          <li><a href="index.html">Home</a></li>
+          <!--<li><a href="index.html#how">Cum Funcționează</a></li>
           <li><a href="index.html#benefits">Beneficii</a></li>
           <li><a href="index.html#cta-final">Începe Acum</a></li>-->
           <li><a href="index.html">Logout</a></li>
@@ -185,7 +185,8 @@
     <div class="profile-card">
       <h2 id="profile-nume">Bun venit!</h2>
       <div class="profile-label">Balans cont:</div>
-      <div class="profile-balance" id="profile-amount">0.00 USDT</div>
+      <div class="profile-balance" id="profile-amount">0.00</div>
+      <!--<div class="profile-label" id="profile-currency">Valută: </div>-->
       <div class="profile-label">Ultima actualizare: 07.06.2024</div>
       <!--<button class="btn-primary" onclick="window.location.href='index.html'">Logout</button>-->
       <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Withdraw</button>
@@ -217,7 +218,10 @@
       window.location.href = 'index.html';
     } else {
       document.getElementById('profile-nume').textContent = 'Bun venit, ' + user.nume + '!';
-      document.getElementById('profile-amount').textContent = Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' USDT';
+      document.getElementById('profile-amount').textContent =
+        Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
+        ' ' + (user.currency || 'USDT');
+      document.getElementById('profile-currency').textContent = 'Valută: ' + (user.currency || 'USDT');
     }
 
     // Withdraw modal logic

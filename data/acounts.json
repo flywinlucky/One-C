@@ -3,18 +3,21 @@
     "nume": "Popescu Ion",
     "login": "popescu",
     "password": "12345",
-    "amount": 3250.00
+    "amount": 3250.00,
+    "currency": "USDT"
   },
   {
     "nume": "Ionescu Maria",
     "login": "ionescu",
     "password": "parola123",
-    "amount": "3e3"
+    "amount": 3000,
+    "currency": "RON"
   },
   {
     "nume": "Vasilescu Andrei",
     "login": "vasilescu",
     "password": "andrei2024",
-    "amount": 780.75
+    "amount": 780.75,
+    "currency": "BTC"
   }
 ]
