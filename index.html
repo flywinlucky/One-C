@@ -405,6 +405,7 @@
           <li><a href="#hero">Home</a></li>
           <li><a href="#how">Cum Funcționează</a></li>
           <li><a href="#benefits">Beneficii</a></li>
+          <li><a href="#" id="cabinet-link">Cabinet</a></li>
           <li><a href="#cta-final">Începe Acum</a></li>
           <li>
             <span id="user-info" style="display:none; font-weight:600; color:#38ffb3;"></span>
@@ -797,6 +798,21 @@
     }
     dots.forEach((dot,i) => dot.onclick = () => showTestimonial(i));
     setInterval(() => showTestimonial((current+1)%testimonials.length), 6000);
+
+    // Cabinet link logic
+    const cabinetLink = document.getElementById('cabinet-link');
+    if (cabinetLink) {
+      cabinetLink.onclick = function(e) {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem('userprofile'));
+        if (user) {
+          window.location.href = 'userprofile.html';
+        } else {
+          // Deschide modalul de login dacă nu e logat
+          document.getElementById('login-link').click();
+        }
+      };
+    }
   </script>
 </body>
 </html>
