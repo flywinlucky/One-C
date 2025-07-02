@@ -164,6 +164,63 @@
     .modal .error {
       color: #e74c3c;
     }
+    .transactions-section {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+    .transactions-panel {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 32px 24px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 2px 24px #38ffb320;
+      text-align: center;
+    }
+    .transactions-panel h3 {
+      color: #38ffb3;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.3rem;
+      font-family: 'Poppins', Arial, sans-serif;
+      font-weight: 700;
+    }
+    .transactions-empty {
+      color: #b6ffe2;
+      font-size: 1.1rem;
+      padding: 24px 0;
+      font-style: italic;
+    }
+    footer {
+      background: #0a1833;
+      color: #b6ffe2;
+      padding: 36px 0 18px 0;
+      text-align: center;
+      font-size: 1rem;
+      margin-top: 48px;
+      border-top: 1.5px solid #38ffb3;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 32px; margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: #38ffb3; font-weight: 600; font-size: 1rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-social {
+      margin-top: 10px;
+    }
+    .footer-social a {
+      color: #38ffb3; margin: 0 8px; font-size: 1.3rem; vertical-align: middle;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: #fff; }
   </style>
 </head>
 <body>
@@ -192,6 +249,34 @@
       <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Withdraw</button>
     </div>
   </section>
+
+  <!-- Panel Istoric Tranzacții -->
+  <section class="transactions-section">
+    <div class="transactions-panel">
+      <h3>Istoric tranzacții</h3>
+      <div class="transactions-empty">
+        Nu există tranzacții efectuate momentan.
+      </div>
+      <!-- În viitor aici se vor afișa tranzacțiile reale -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="index.html#hero">Home</a>
+      <a href="index.html#how">Cum Funcționează</a>
+      <a href="index.html#benefits">Beneficii</a>
+      <a href="index.html#cta-final">Începe Acum</a>
+      <a href="mailto:contact@oncredit.xyz">Contact</a>
+    </div>
+    <div class="footer-social">
+      <!--<a href="#" title="Twitter"><span aria-hidden="true">🐦</span></a>
+      <a href="#" title="Telegram"><span aria-hidden="true">💬</span></a>
+      <a href="#" title="Discord"><span aria-hidden="true">🕹️</span></a>-->
+    </div>
+    <div style="margin-top:10px;">&copy; 2024 ON CREDIT. Toate drepturile rezervate.</div>
+  </footer>
   <!-- Withdraw Modal -->
   <div class="modal-bg" id="withdraw-modal-bg" style="display:none;">
     <div class="modal" style="min-width:320px;max-width:95vw;">
