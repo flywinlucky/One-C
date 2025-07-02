@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profil Utilizator - ON CREDIT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    /* ...copied styles from index.html... */
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: #0a1833;
+      color: #fff;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3 { font-family: 'Poppins', Arial, sans-serif; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    header {
+      background: rgba(10,24,51,0.95);
+      position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.08);
+      transition: background 0.3s;
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px;
+    }
+    .logo {
+      font-size: 2rem; font-weight: 700;
+      color: #38ffb3;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      display: flex; gap: 32px; list-style: none; margin: 0; padding: 0;
+    }
+    nav li a {
+      font-size: 1rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav li a:hover { color: #38ffb3; }
+    @media (max-width: 700px) {
+      nav ul { flex-direction: column; gap: 18px;}
+      .nav { height: 56px;}
+      header { height: 56px;}
+    }
+    .profile-section {
+      margin-top: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+    }
+    .profile-card {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      padding: 40px 32px;
+      box-shadow: 0 2px 24px #38ffb320;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .profile-balance {
+      font-size: 2.2rem;
+      color: #38ffb3;
+      font-weight: 700;
+      margin: 24px 0 12px 0;
+    }
+    .profile-label {
+      color: #b6ffe2;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #38ffb3 0%, #00e6c3 100%);
+      color: #0a1833;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 32px;
+      padding: 14px 40px;
+      cursor: pointer;
+      box-shadow: 0 4px 32px #38ffb370;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 24px;
+    }
+    .btn-primary:hover { background: #38ffb3; transform: translateY(-2px) scale(1.03);}
+    /* Modal styles */
+    .modal-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #0a1833;
+      cursor: pointer;
+    }
+    .modal h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #0a1833;
+    }
+    .modal label {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .modal input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+    .modal button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: #38ffb3;
+      color: #0a1833;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal button[type="submit"]:hover {
+      background: #32e0a1;
+    }
+    .modal .success, .modal .error {
+      display: none;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    .modal .success {
+      color: #38b36a;
+    }
+    .modal .error {
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">ON CREDIT</div>
+      <nav>
+        <ul>
+          <!--<li><a href="index.html">Home</a></li>
+          <li><a href="index.html#how">Cum Funcționează</a></li>
+          <li><a href="index.html#benefits">Beneficii</a></li>
+          <li><a href="index.html#cta-final">Începe Acum</a></li>-->
+          <li><a href="index.html">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section class="profile-section">
+    <div class="profile-card">
+      <h2>Bun venit, 12345!</h2>
+      <div class="profile-label">Balans cont:</div>
+      <div class="profile-balance">3,250.00 USDT</div>
+      <div class="profile-label">Ultima actualizare: 07.06.2024</div>
+      <!--<button class="btn-primary" onclick="window.location.href='index.html'">Logout</button>-->
+      <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Withdraw</button>
+    </div>
+  </section>
+  <!-- Withdraw Modal -->
+  <div class="modal-bg" id="withdraw-modal-bg" style="display:none;">
+    <div class="modal" style="min-width:320px;max-width:95vw;">
+      <button class="close-modal" id="close-withdraw-modal" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
+      <h3>Confirmare Retragere</h3>
+      <form id="withdraw-form" autocomplete="off">
+        <label for="withdraw-code">Cod de confirmare de la manager</label>
+        <input type="text" id="withdraw-code" name="withdraw-code" required placeholder="Introdu codul">
+        <button type="submit" class="btn-primary">Confirmă</button>
+      </form>
+      <div id="withdraw-success" style="display:none; margin-top:18px; color:#38b36a; font-weight:600;">
+        Retragerea a fost confirmată!
+      </div>
+      <div id="withdraw-error" style="display:none; margin-top:18px; color:#e74c3c; font-weight:600;">
+        Cod incorect!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Withdraw modal logic
+    const withdrawBtn = document.getElementById('withdraw-btn');
+    const withdrawModalBg = document.getElementById('withdraw-modal-bg');
+    const closeWithdrawModal = document.getElementById('close-withdraw-modal');
+    const withdrawForm = document.getElementById('withdraw-form');
+    const withdrawSuccess = document.getElementById('withdraw-success');
+    const withdrawError = document.getElementById('withdraw-error');
+    withdrawBtn.onclick = function() {
+      withdrawModalBg.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      withdrawSuccess.style.display = 'none';
+      withdrawError.style.display = 'none';
+      withdrawForm.reset();
+    };
+    closeWithdrawModal.onclick = function() {
+      withdrawModalBg.style.display = 'none';
+      document.body.style.overflow = '';
+      withdrawSuccess.style.display = 'none';
+      withdrawError.style.display = 'none';
+      withdrawForm.reset();
+    };
+    withdrawModalBg.onclick = function(e) {
+      if (e.target === this) closeWithdrawModal.onclick();
+    };
+    withdrawForm.onsubmit = function(e) {
+      e.preventDefault();
+      const code = document.getElementById('withdraw-code').value.trim();
+      if (code === '123456') {
+        withdrawSuccess.style.display = 'block';
+        withdrawError.style.display = 'none';
+        setTimeout(() => {
+          closeWithdrawModal.onclick();
+        }, 1800);
+      } else {
+        withdrawError.style.display = 'block';
+        withdrawSuccess.style.display = 'none';
+      }
+    };
+  </script>
+</body>
+</html>

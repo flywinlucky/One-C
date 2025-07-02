@@ -406,6 +406,7 @@
           <li><a href="#how">Cum Funcționează</a></li>
           <li><a href="#benefits">Beneficii</a></li>
           <li><a href="#cta-final">Începe Acum</a></li>
+          <li><a href="#" id="login-link">Login</a></li>
         </ul>
       </nav>
     </div>
@@ -536,6 +537,23 @@
       </div>
     </div>
   </div>
+  <!-- Modal Login -->
+  <div class="modal-bg" id="login-modal-bg">
+    <div class="modal">
+      <button class="close-modal" id="close-login-modal">&times;</button>
+      <h3>Autentificare</h3>
+      <form id="login-form" autocomplete="off">
+        <label for="login-user">Utilizator</label>
+        <input type="text" id="login-user" name="login-user" required placeholder="Utilizator">
+        <label for="login-pass">Parolă</label>
+        <input type="password" id="login-pass" name="login-pass" required placeholder="Parolă">
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+      <div id="login-error" style="display:none; margin-top:18px; color:#e74c3c; font-weight:600;">
+        Utilizator sau parolă incorectă!
+      </div>
+    </div>
+  </div>
   <!-- Footer -->
   <footer>
     <div class="footer-links">
@@ -661,6 +679,39 @@
       }
       document.getElementById('form-success').style.display = 'block';
       setTimeout(closeModal, 2000);
+    };
+
+    // Login modal logic
+    const loginLink = document.getElementById('login-link');
+    const loginModalBg = document.getElementById('login-modal-bg');
+    const closeLoginModal = document.getElementById('close-login-modal');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    loginLink.onclick = function(e) {
+      e.preventDefault();
+      loginModalBg.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      loginError.style.display = 'none';
+      loginForm.reset();
+    };
+    closeLoginModal.onclick = function() {
+      loginModalBg.classList.remove('active');
+      document.body.style.overflow = '';
+      loginError.style.display = 'none';
+      loginForm.reset();
+    };
+    loginModalBg.onclick = function(e) {
+      if (e.target === this) closeLoginModal.onclick();
+    };
+    loginForm.onsubmit = function(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-user').value.trim();
+      const pass = document.getElementById('login-pass').value.trim();
+      if (user === '12345' && pass === '12345') {
+        window.location.href = 'userprofile.html';
+      } else {
+        loginError.style.display = 'block';
+      }
     };
 
     // Testimonials slider
