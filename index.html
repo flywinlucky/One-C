@@ -195,14 +195,12 @@
     }
 
     /* Testimoniale */
-    .testimonials-slider {
-      position: relative;
-      max-width: 600px;
-      margin: 0 auto;
-  
-    }
-    .testimonial {
-      background: rgba(255,255,255,0.04);
+    .benefit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.03);
       border: 1.5px solid #38ffb3;
       border-radius: 18px;
       padding: 36px 28px 28px 28px;
@@ -212,38 +210,21 @@
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.7s, transform 0.7s;
-      position: absolute; left: 0; top: 0; width: 100%;
-      z-index: 1;
-      pointer-events: none;
+      position: relative;
+      margin: 0 auto 32px auto;
     }
-    .testimonial.active {
+    .benefit.active {
       opacity: 1;
       transform: translateY(0);
       position: relative;
       pointer-events: auto;
       z-index: 2;
     }
-    .testimonial-user {
-      margin-top: 18px;
-      font-weight: 600;
-      color: #38ffb3;
-      font-size: 1.05rem;
-    }
     .testimonial-stars {
       color: #ffe066;
       margin-bottom: 10px;
       font-size: 1.1rem;
     }
-    .slider-controls {
-      display: flex; justify-content: center; gap: 18px; margin-top: 18px;
-    }
-    .slider-dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      background: #38ffb3; opacity: 0.4; cursor: pointer;
-      border: none; outline: none;
-      transition: opacity 0.2s;
-    }
-    .slider-dot.active { opacity: 1; }
     /* CTA final */
     .cta-final {
       text-align: center;
@@ -474,11 +455,11 @@
           <span></span><span></span><span></span>
         </div>
         <ul id="nav-menu">
-          <li><a href="#hero">Home</a></li>
+          <!--<li><a href="#hero">Home</a></li>-->
           <li><a href="#how">Cum Funcționează</a></li>
           <li><a href="#benefits">Beneficii</a></li>
-          <li><a href="#" id="cabinet-link">Cabinet</a></li>
           <li><a href="#cta-final">Începe Acum</a></li>
+          <li><a href="#" id="cabinet-link">Cabinet</a></li>
           <li>
             <span id="user-info" style="display:none; font-weight:600; color:#38ffb3;"></span>
             <a href="#" id="login-link">Login</a>
@@ -500,6 +481,7 @@
   <!-- Cum funcționează -->
   <section id="how">
     <h2 class="aos">Cum Funcționează?</h2>
+    
     <div class="steps">
       <div class="step aos" data-aos-delay="0">
         <div class="step-icon">🔗</div>
@@ -546,31 +528,31 @@
   </section>
   <!-- Testimoniale -->
   <section id="testimonials">
-    <h2 class="aos">Ce spun utilizatorii</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card aos" data-aos-delay="0">
-        <img src="Resources/Reviews Avatars/Icon_1.png" alt="Andrei P." class="testimonial-avatar">
-        <div class="testimonial-user">Andrei P., București</div>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-desc">"Am primit creditul în 30 de secunde, fără niciun stres. Platforma e genială!"</div>
+    <h2 class="aos">Ce spun utilizatorii ?</h2>
+    <div class="benefits">
+      <div class="benefit aos" data-aos-delay="0">
+        <img src="Resources/Reviews Avatars/Icon_1.png" alt="Andrei P." style="width:54px;height:54px;border-radius:50%;margin-bottom:12px;">
+        <div class="benefit-title" style="color:#38ffb3;">Andrei P., București</div>
+        <div class="testimonial-stars" style="color:#ffe066;margin-bottom:8px;">5/5 ★★★★★</div>
+        <div>"Am primit creditul în 30 de secunde, fără niciun stres. Platforma e genială!"</div>
       </div>
-      <div class="testimonial-card aos" data-aos-delay="100">
-        <img src="Resources/Reviews Avatars/Icon_2.png" alt="Ioana M." class="testimonial-avatar">
-        <div class="testimonial-user">Ioana M., Cluj</div>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-desc">"Dobânzile sunt incredibil de mici, iar totul e transparent. Recomand!"</div>
+      <div class="benefit aos" data-aos-delay="100">
+        <img src="Resources/Reviews Avatars/Icon_2.png" alt="Ioana M." style="width:54px;height:54px;border-radius:50%;margin-bottom:12px;">
+        <div class="benefit-title" style="color:#38ffb3;">Ioana M., Cluj</div>
+        <div class="testimonial-stars" style="color:#ffe066;margin-bottom:8px;">5/5 ★★★★★</div>
+        <div>"Dobânzile sunt incredibil de mici, iar totul e transparent. Recomand!"</div>
       </div>
-      <div class="testimonial-card aos" data-aos-delay="200">
-        <img src="Resources/Reviews Avatars/Icon_3.png" alt="Mihai R." class="testimonial-avatar">
-        <div class="testimonial-user">Mihai R., Timișoara</div>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-desc">"E viitorul finanțelor. Am garantat cu crypto și am primit banii instant."</div>
+      <div class="benefit aos" data-aos-delay="200">
+        <img src="Resources/Reviews Avatars/Icon_3.png" alt="Mihai R." style="width:54px;height:54px;border-radius:50%;margin-bottom:12px;">
+        <div class="benefit-title" style="color:#38ffb3;">Mihai R., Timișoara</div>
+        <div class="testimonial-stars" style="color:#ffe066;margin-bottom:8px;">5/5 ★★★★★</div>
+        <div>"E viitorul finanțelor. Am garantat cu crypto și am primit banii instant."</div>
       </div>
-      <div class="testimonial-card aos" data-aos-delay="300">
-        <img src="Resources/Reviews Avatars/Icon_4.png" alt="Elena S." class="testimonial-avatar">
-        <div class="testimonial-user">Elena S., Iași</div>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-desc">"Proces rapid, fără birocrație. Recomand tuturor care au nevoie de lichiditate!"</div>
+      <div class="benefit aos" data-aos-delay="300">
+        <img src="Resources/Reviews Avatars/Icon_4.png" alt="Elena S." style="width:54px;height:54px;border-radius:50%;margin-bottom:12px;">
+        <div class="benefit-title" style="color:#38ffb3;">Elena S., Iași</div>
+        <div class="testimonial-stars" style="color:#ffe066;margin-bottom:8px;">5/5 ★★★★★</div>
+        <div>"Proces rapid, fără birocrație. Recomand tuturor care au nevoie de lichiditate!"</div>
       </div>
     </div>
   </section>
@@ -645,7 +627,7 @@
   <!-- Footer -->
   <footer>
     <div class="footer-links">
-      <a href="#hero">Home</a>
+       <!--a href="#hero">Home</a>-->
       <a href="#how">Cum Funcționează</a>
       <a href="#benefits">Beneficii</a>
       <a href="#cta-final">Începe Acum</a>
@@ -904,5 +886,5 @@
       };
     }
   </script>
-</body>
+ 
 </html>
