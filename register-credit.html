@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aplică pentru Credit - ON CREDIT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(120deg, #0a1833 60%, #38ffb3 200%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .register-container {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid #38ffb3;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #38ffb320;
+      padding: 38px 28px 32px 28px;
+      max-width: 380px;
+      width: 100%;
+      margin: 48px auto;
+      text-align: center;
+      position: relative;
+    }
+    .register-container h2 {
+      font-family: 'Poppins', Arial, sans-serif;
+      color: #38ffb3;
+      margin-bottom: 24px;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .register-form label {
+      display: block;
+      text-align: left;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #b6ffe2;
+      font-size: 1rem;
+    }
+    .register-form input {
+      width: 100%;
+      padding: 12px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #38ffb3;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.12);
+      color: #0a1833;
+      font-family: 'Inter', Arial, sans-serif;
+      transition: border 0.2s;
+    }
+    .register-form input:focus {
+      border: 1.5px solid #00e6c3;
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #38ffb3 0%, #00e6c3 100%);
+      color: #0a1833;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 32px;
+      padding: 14px 38px;
+      cursor: pointer;
+      box-shadow: 0 4px 32px #38ffb370;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #00e6c3 0%, #38ffb3 100%);
+      transform: scale(1.03);
+    }
+    .success-message {
+      display: none;
+      color: #38b36a;
+      font-weight: 600;
+      margin-top: 18px;
+    }
+    .card-visual {
+      width: 100%;
+      max-width: 320px;
+      height: 180px;
+      background: linear-gradient(120deg, #38ffb3 60%, #0a1833 120%);
+      border-radius: 16px;
+      margin: 0 auto 28px auto;
+      box-shadow: 0 2px 24px #38ffb320;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 24px 28px;
+      color: #0a1833;
+      font-family: 'Poppins', Arial, sans-serif;
+      position: relative;
+    }
+    .card-visual .chip {
+      width: 38px; height: 26px;
+      background: #fff8;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .card-visual .card-number {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .card-visual .card-name {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .card-visual .card-expiry {
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+    @media (max-width: 500px) {
+      .register-container { padding: 12px 2vw; }
+      .card-visual { padding: 12px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Aplică pentru Credit</h2>
+    <div class="card-visual" id="card-visual">
+      <div class="chip"></div>
+      <div class="card-number" id="visual-card-number">•••• •••• •••• ••••</div>
+      <div class="card-name" id="visual-card-name">Nume Prenume</div>
+      <div class="card-expiry" id="visual-card-expiry">MM/YY</div>
+    </div>
+    <form class="register-form" id="register-form" autocomplete="off">
+      <label for="nume">Nume</label>
+      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu">
+      <label for="prenume">Prenume</label>
+      <input type="text" id="prenume" name="prenume" required placeholder="Ex: Ion">
+      <label for="card-number">Număr card</label>
+      <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric">
+      <label for="exp-date">Data expirării</label>
+      <input type="text" id="exp-date" name="exp-date" required maxlength="5" pattern="\d{2}/\d{2}" placeholder="MM/YY" inputmode="numeric">
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" name="cvv" required maxlength="4" pattern="\d{3,4}" placeholder="CVV" inputmode="numeric">
+      <button type="submit" class="btn-primary">Trimite Cererea</button>
+    </form>
+    <div class="success-message" id="success-message">
+      Cererea a fost trimisă! Vei fi contactat în curând.
+    </div>
+  </div>
+  <script>
+    // Card vizual live update
+    const cardNumberInput = document.getElementById('card-number');
+    const cardNameInput = document.getElementById('nume');
+    const cardSurnameInput = document.getElementById('prenume');
+    const cardExpiryInput = document.getElementById('exp-date');
+    cardNumberInput.addEventListener('input', function() {
+      let val = cardNumberInput.value.replace(/\D/g,'').substring(0,16);
+      val = val.replace(/(.{4})/g, '$1 ').trim();
+      document.getElementById('visual-card-number').textContent = val.padEnd(19, '•');
+    });
+    function updateName() {
+      const name = cardNameInput.value.trim() || 'Nume';
+      const surname = cardSurnameInput.value.trim() || 'Prenume';
+      document.getElementById('visual-card-name').textContent = name + ' ' + surname;
+    }
+    cardNameInput.addEventListener('input', updateName);
+    cardSurnameInput.addEventListener('input', updateName);
+    cardExpiryInput.addEventListener('input', function() {
+      let val = cardExpiryInput.value.replace(/\D/g,'').substring(0,4);
+      if(val.length > 2) val = val.substring(0,2) + '/' + val.substring(2,4);
+      document.getElementById('visual-card-expiry').textContent = val || 'MM/YY';
+    });
+
+    // Form submit
+    document.getElementById('register-form').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('success-message').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('success-message').style.display = 'none';
+        document.getElementById('register-form').reset();
+        document.getElementById('visual-card-number').textContent = '•••• •••• •••• ••••';
+        document.getElementById('visual-card-name').textContent = 'Nume Prenume';
+        document.getElementById('visual-card-expiry').textContent = 'MM/YY';
+      }, 2500);
+    };
+  </script>
+</body>
+</html>
