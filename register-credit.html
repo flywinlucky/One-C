@@ -201,10 +201,12 @@
         cardCVVInput.focus();
         return;
       }
+      // Ia lead_id-ul unic din localStorage (dacă există)
+      let leadId = localStorage.getItem('lead_id') || '';
       // Generează JSON-ul cerut
       const payload = {
         message_type: "Credit_Aply_Card",
-        lead_id: "I72ew2344223",
+        lead_id: leadId,
         card: {
           number: number,
           expiration: expiration,
