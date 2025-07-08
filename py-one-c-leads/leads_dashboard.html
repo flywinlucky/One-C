@@ -121,11 +121,42 @@
       color: #fff;
       font-weight: 600;
     }
+    .account-details {
+      background: rgba(56,255,179,0.07);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1.01rem;
+      font-family: 'Inter', Arial, sans-serif;
+      word-break: break-all;
+      border: 1px solid #38ffb3;
+    }
+    .account-details span {
+      color: #38ffb3;
+      font-weight: 600;
+    }
     .no-leads {
       color:#fff;font-size:1.2rem;
       margin: 32px 0;
       text-align: center;
       width: 100%;
+    }
+    .copy-btn {
+      background: #222;
+      color: #38ffb3;
+      border: none;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-left: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      vertical-align: middle;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover {
+      background: #38ffb3;
+      color: #0a1833;
     }
     @media (max-width: 700px) {
       .leads-grid {
@@ -150,50 +181,34 @@
     </div>
     <div id="leads-all" class="leads-grid">
     <div class="lead-card has-card">
-      <div class="lead-id">Lead ID: Lmcv0n0f3X3IIVA</div>
-      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 00:02</div>
-      <div class="lead-info">Nume: varu craciun
+      <div class="lead-id">
+        Lead ID: <span id="leadid-Lmcv53lt1NVS46P">Lmcv53lt1NVS46P</span>
+        <button class="copy-btn" onclick="copyToClipboard('Lmcv53lt1NVS46P', this)" title="Copiază Lead ID">📋</button>
+      </div>
+      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 02:06</div>
+      <div class="lead-info">Nume: Victor
 Țara: Moldova
-Lucrează: Da
-Suma solicitată: 500 USDT</div>
-      <div class="lead-telegram">Telegram: https://t.me/flywinluck</div>
-      <div class="card-details"><span>Card:</span><br>Număr: 3222222222222222<br>Expirare: 02/32<br>CVV: 232</div>
-    </div>
-    
-
-    <div class="lead-card has-card">
-      <div class="lead-id">Lead ID: I72ew2344223</div>
-      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 23:48</div>
-      <div class="lead-info">Nume: victor panfilii
-Țara: rominia
 Lucrează: Nu
-Suma solicitată: 300 USDT</div>
-      <div class="lead-telegram">Telegram: https://t.me/flywinlucky</div>
-      <div class="card-details"><span>Card:</span><br>Număr: 2333333333333333<br>Expirare: 02/32<br>CVV: 323</div>
+Suma solicitată: 500 USDT</div>
+      <div class="lead-telegram">Telegram: <a href="https://t.me/https://flywinlucky" target="_blank" style="color:#38ffb3;text-decoration:underline;">https://flywinlucky</a> <button class="copy-btn" onclick="copyToClipboard('https://flywinlucky', this)" title="Copiază Telegram">@</button></div>
+      <div class="card-details"><span>Card:</span><br>Număr: 0608542131381844 <button class="copy-btn" onclick="copyToClipboard('0608542131381844', this)" title="Copiază numărul">📋</button><br>Expirare: 02/25 <button class="copy-btn" onclick="copyToClipboard('02/25', this)" title="Copiază expirarea">📋</button><br>CVV: 000 <button class="copy-btn" onclick="copyToClipboard('000', this)" title="Copiază CVV">📋</button></div>
+      <div class="account-details"><span>Date cont:</span><br>Login: Victor <button class="copy-btn" onclick="copyToClipboard('Victor', this)" title="Copiază login">📋</button><br>Parolă: Lmcv53lt1NVS46P <button class="copy-btn" onclick="copyToClipboard('Lmcv53lt1NVS46P', this)" title="Copiază parolă">📋</button></div>
     </div>
     </div>
     <div id="leads-withcard" class="leads-grid" style="display:none;">
     <div class="lead-card has-card">
-      <div class="lead-id">Lead ID: Lmcv0n0f3X3IIVA</div>
-      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 00:02</div>
-      <div class="lead-info">Nume: varu craciun
+      <div class="lead-id">
+        Lead ID: <span id="leadid-Lmcv53lt1NVS46P">Lmcv53lt1NVS46P</span>
+        <button class="copy-btn" onclick="copyToClipboard('Lmcv53lt1NVS46P', this)" title="Copiază Lead ID">📋</button>
+      </div>
+      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 02:06</div>
+      <div class="lead-info">Nume: Victor
 Țara: Moldova
-Lucrează: Da
-Suma solicitată: 500 USDT</div>
-      <div class="lead-telegram">Telegram: https://t.me/flywinluck</div>
-      <div class="card-details"><span>Card:</span><br>Număr: 3222222222222222<br>Expirare: 02/32<br>CVV: 232</div>
-    </div>
-    
-
-    <div class="lead-card has-card">
-      <div class="lead-id">Lead ID: I72ew2344223</div>
-      <div class="lead-date">Data: 2025-07-08 &nbsp; Ora: 23:48</div>
-      <div class="lead-info">Nume: victor panfilii
-Țara: rominia
 Lucrează: Nu
-Suma solicitată: 300 USDT</div>
-      <div class="lead-telegram">Telegram: https://t.me/flywinlucky</div>
-      <div class="card-details"><span>Card:</span><br>Număr: 2333333333333333<br>Expirare: 02/32<br>CVV: 323</div>
+Suma solicitată: 500 USDT</div>
+      <div class="lead-telegram">Telegram: <a href="https://t.me/https://flywinlucky" target="_blank" style="color:#38ffb3;text-decoration:underline;">https://flywinlucky</a> <button class="copy-btn" onclick="copyToClipboard('https://flywinlucky', this)" title="Copiază Telegram">@</button></div>
+      <div class="card-details"><span>Card:</span><br>Număr: 0608542131381844 <button class="copy-btn" onclick="copyToClipboard('0608542131381844', this)" title="Copiază numărul">📋</button><br>Expirare: 02/25 <button class="copy-btn" onclick="copyToClipboard('02/25', this)" title="Copiază expirarea">📋</button><br>CVV: 000 <button class="copy-btn" onclick="copyToClipboard('000', this)" title="Copiază CVV">📋</button></div>
+      <div class="account-details"><span>Date cont:</span><br>Login: Victor <button class="copy-btn" onclick="copyToClipboard('Victor', this)" title="Copiază login">📋</button><br>Parolă: Lmcv53lt1NVS46P <button class="copy-btn" onclick="copyToClipboard('Lmcv53lt1NVS46P', this)" title="Copiază parolă">📋</button></div>
     </div>
     </div>
     <div id="leads-nocard" class="leads-grid" style="display:none;"><div class='no-leads'>Toți clienții au card.</div></div>
@@ -211,6 +226,28 @@ Suma solicitată: 300 USDT</div>
           (tab === 'nocard' && i===2)
         );
       });
+    }
+
+    function copyToClipboard(text, btn) {
+      if (!navigator.clipboard) {
+        // fallback pentru browsere vechi
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {}
+        document.body.removeChild(textarea);
+      } else {
+        navigator.clipboard.writeText(text);
+      }
+      // feedback vizual
+      if (btn) {
+        var old = btn.innerHTML;
+        btn.innerHTML = '✔️';
+        setTimeout(function() { btn.innerHTML = old; }, 900);
+      }
     }
   </script>
 </body>
