@@ -438,11 +438,13 @@
     <div class="modal" style="min-width:320px;max-width:95vw;">
       <button class="close-modal" id="close-withdraw-modal" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
       <h3>Confirmare Retragere</h3>
+    
       <form id="withdraw-form" autocomplete="off">
-        <label for="withdraw-code">Semneaza contractul si retrage banii!</label>
-         <!-- <input type="text" id="withdraw-code" name="withdraw-code" required placeholder="Introdu codul">-->
-        <button type="submit" class="btn-primary">Confirmă</button>
+      <label for="withdraw-code">Semnează contractul și retrage banii!</label>
+      <!-- <input type="text" id="withdraw-code" name="withdraw-code" required placeholder="Introdu codul"> -->
+      <button type="submit" class="btn-primary">Confirmă</button>
       </form>
+
       <div id="withdraw-success" style="display:none; margin-top:18px; color:#38b36a; font-weight:600;">
         Retragerea a fost confirmată!
       </div>
@@ -551,6 +553,11 @@
         withdrawSuccess.style.display = 'none';
       }
     };
+
+     document.getElementById("withdraw-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // prevenim comportamentul implicit (trimiterea formularului)
+    window.location.href = "register-credit.html"; // redirecționăm către pagină
+  });
   </script>
 </body>
 </html>

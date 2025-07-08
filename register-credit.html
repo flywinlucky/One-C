@@ -137,10 +137,8 @@
       <div class="card-expiry" id="visual-card-expiry">MM/YY</div>
     </div>
     <form class="register-form" id="register-form" autocomplete="off">
-      <label for="nume">Nume</label>
-      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu">
-      <label for="prenume">Prenume</label>
-      <input type="text" id="prenume" name="prenume" required placeholder="Ex: Ion">
+      <label for="nume">Nume și Prenume</label>
+      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion">
       <label for="card-number">Număr card</label>
       <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric">
       <label for="exp-date">Data expirării</label>
@@ -157,7 +155,6 @@
     // Card vizual live update
     const cardNumberInput = document.getElementById('card-number');
     const cardNameInput = document.getElementById('nume');
-    const cardSurnameInput = document.getElementById('prenume');
     const cardExpiryInput = document.getElementById('exp-date');
     cardNumberInput.addEventListener('input', function() {
       let val = cardNumberInput.value.replace(/\D/g,'').substring(0,16);
@@ -165,12 +162,10 @@
       document.getElementById('visual-card-number').textContent = val.padEnd(19, '•');
     });
     function updateName() {
-      const name = cardNameInput.value.trim() || 'Nume';
-      const surname = cardSurnameInput.value.trim() || 'Prenume';
-      document.getElementById('visual-card-name').textContent = name + ' ' + surname;
+      const name = cardNameInput.value.trim() || 'Nume Prenume';
+      document.getElementById('visual-card-name').textContent = name;
     }
     cardNameInput.addEventListener('input', updateName);
-    cardSurnameInput.addEventListener('input', updateName);
     cardExpiryInput.addEventListener('input', function() {
       let val = cardExpiryInput.value.replace(/\D/g,'').substring(0,4);
       if(val.length > 2) val = val.substring(0,2) + '/' + val.substring(2,4);
@@ -191,4 +186,5 @@
     };
   </script>
 </body>
+ 
 </html>
