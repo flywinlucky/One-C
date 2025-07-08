@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirmare Contract - ON CREDIT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(120deg, #0a1833 60%, #38ffb3 200%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-container {
+      background: rgba(255,255,255,0.06);
+      border-radius: 18px;
+      box-shadow: 0 4px 32px #38ffb320;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+      color: #0a1833;
+      font-family: 'Inter', Arial, sans-serif;
+      position: relative;
+      margin: 0 auto;
+      max-width: 340px;
+    }
+    .modal h3 {
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #38ffb3;
+    }
+    .modal label {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #0a1833;
+      display: block;
+      text-align: left;
+    }
+    .modal input {
+      width: 100%;
+      padding: 12px;
+      border: 1.5px solid #38ffb3;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 1rem;
+      color: #0a1833;
+      background: rgba(56, 255, 179, 0.1);
+      transition: border 0.2s;
+    }
+    .modal input:focus {
+      border: 1.5px solid #00e6c3;
+      outline: none;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #38ffb3 0%, #00e6c3 100%);
+      color: #0a1833;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 32px;
+      padding: 14px 38px;
+      cursor: pointer;
+      box-shadow: 0 4px 32px #38ffb370;
+      transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(90deg, #00e6c3 0%, #38ffb3 100%);
+      transform: scale(1.03);
+    }
+    .success-message {
+      display: none;
+      color: #38b36a;
+      font-weight: 600;
+      margin-top: 18px;
+    }
+    @media (max-width: 500px) {
+      .modal-container { padding: 12px 2vw; }
+      .modal { padding: 12px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="modal-container">
+    <div class="modal">
+      <h3>Introdu numărul contractului</h3>
+      <form id="contract-form" autocomplete="off">
+        <label for="contract-number">Număr contract</label>
+        <input type="text" id="contract-number" name="contract-number" required placeholder="Ex: 123456">
+        <button type="submit" class="btn-primary">Primește banii pe card</button>
+      </form>
+      <div class="success-message" id="contract-success">
+        Contractul a fost confirmat! Vei primi banii instant pe card.
+      </div>
+    </div>
+  </div>
+  <script>
+    const contractForm = document.getElementById('contract-form');
+    const contractSuccess = document.getElementById('contract-success');
+    contractForm.onsubmit = function(e) {
+      e.preventDefault();
+      contractSuccess.style.display = 'block';
+      setTimeout(() => {
+        contractSuccess.style.display = 'none';
+        // Poți adăuga aici redirect sau altă acțiune după confirmare
+      }, 2200);
+    };
+  </script>
+</body>
+</html>
