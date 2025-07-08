@@ -753,14 +753,21 @@
       const suma = document.getElementById('suma').value.trim();
       const telegram = document.getElementById('telegram').value.trim();
 
-      const text = encodeURIComponent(
-        `🟢 Cerere nouă credit ON CREDIT\n` +
-        `👤 Nume: ${nume}\n` +
-        `🌍 Țara: ${country}\n` +
-        `💼 Lucrează: ${lucreaza}\n` +
-        `💸 Suma dorită: ${suma} USDT\n` +
-        `✈️ Telegram: ${telegram}`
-      );
+      // Generează JSON-ul cerut
+      const payload = {
+        message_type: "Credit_Request",
+        lead_id: "I72ew2344223",
+        date: new Date().toISOString().slice(0,10),
+        time: (new Date().toTimeString().slice(0,5)),
+        client: {
+          full_name: nume,
+          country: country,
+          employed: lucreaza === "Da",
+          requested_amount: suma + " USDT",
+          telegram: telegram
+        }
+      };
+      const text = encodeURIComponent(JSON.stringify(payload, null, 2));
       const url = `https://api.telegram.org/bot7891196418:AAGpnA4Pukt85UMjgrvlBX3Unrtpy3EZPoE/sendMessage?chat_id=6953089880&text=${text}`;
 
       try {

