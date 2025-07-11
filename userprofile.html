@@ -86,16 +86,20 @@
       transition: color 0.2s;
     }
     nav li a:hover { color: #38ffb3; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px; }
+    .hamburger span { width: 28px; height: 3px; background: #38ffb3; border-radius: 2px; }
     @media (max-width: 700px) {
       nav ul {
-        background: rgba(10,24,51,0.98);
-        box-shadow: 0 8px 32px #38ffb340;
-        border-radius: 0 0 18px 18px;
-        padding: 24px 0 18px 0;
+        display: none;
         position: absolute;
         top: 56px; right: 0;
+        background: rgba(10,24,51,0.98);
+        flex-direction: column;
         width: 220px;
         min-height: 120px;
+        padding: 24px 0 18px 0;
+        border-radius: 0 0 18px 18px;
+        box-shadow: 0 8px 32px #38ffb340;
         transition: transform 0.35s cubic-bezier(.23,1.01,.32,1), opacity 0.3s;
         transform: translateY(-24px) scale(0.98);
         opacity: 0;
@@ -129,6 +133,7 @@
       nav ul li:hover {
         background: rgba(56,255,179,0.08);
       }
+      .hamburger { display: flex; }
     }
     nav ul.open {
       box-shadow: 0 8px 32px #38ffb370, 0 0 0 2px #38ffb3;
@@ -391,11 +396,16 @@
 
   <header>
     <div class="container nav">
-      <div class="logo">ON CREDIT</div>
+      <div class="logo">
+        <a href="index.html" style="color:#38ffb3;text-decoration:none;display:inline-block;cursor:pointer;">ON CREDIT</a>
+      </div>
       <nav>
-        <ul>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+        <ul id="nav-menu">
+          <li><a href="index.html">Home</a></li>
           <li>
-            <li><a href="index.html">Home</a></li>
             <span id="user-info" style="font-weight:600; color:#38ffb3;"></span>
             <a href="#" id="logout-link">Logout</a>
           </li>
@@ -567,6 +577,30 @@
     e.preventDefault(); // prevenim comportamentul implicit (trimiterea formularului)
     window.location.href = "register-credit.html"; // redirecționăm către pagină
   });
+
+    // Hamburger menu logic (copied from index.html)
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.onclick = () => navMenu.classList.toggle('open');
+    // Close nav on click outside (mobile)
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth <= 700 && navMenu.classList.contains('open')) {
+        if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          navMenu.classList.remove('open');
+        }
+      }
+    });
+    // Smooth scroll for nav links (if any)
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior: 'smooth'});
+          navMenu.classList.remove('open');
+        });
+      }
+    });
   </script>
 </body>
 </html>
