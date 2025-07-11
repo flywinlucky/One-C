@@ -6,6 +6,9 @@
   <title>Confirmare Contract - ON CREDIT</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
+    html, body, * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0; padding: 0;
       font-family: 'Inter', Arial, sans-serif;
@@ -15,6 +18,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100vw;
+      overflow-x: hidden;
     }
     .modal-container {
       background: rgba(255,255,255,0.06);
@@ -24,17 +29,25 @@
       width: 100%;
       text-align: center;
       position: relative;
+      margin: 0 8px;
+      padding: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
     .modal {
       background: #fff;
       border-radius: 12px;
-      padding: 24px;
+      padding: 24px 18px;
       box-shadow: 0 4px 32px rgba(0,0,0,0.2);
       color: #0a1833;
       font-family: 'Inter', Arial, sans-serif;
       position: relative;
       margin: 0 auto;
       max-width: 340px;
+      width: 100%;
+      box-sizing: border-box;
     }
     .modal h3 {
       margin-top: 0;
@@ -49,6 +62,7 @@
       color: #0a1833;
       display: block;
       text-align: left;
+      font-size: 1rem;
     }
     .modal input {
       width: 100%;
@@ -60,6 +74,7 @@
       color: #0a1833;
       background: rgba(56, 255, 179, 0.1);
       transition: border 0.2s;
+      box-sizing: border-box;
     }
     .modal input:focus {
       border: 1.5px solid #00e6c3;
@@ -77,6 +92,8 @@
       box-shadow: 0 4px 32px #38ffb370;
       transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
       margin-top: 8px;
+      width: 100%;
+      min-height: 44px;
     }
     .btn-primary:hover {
       background: linear-gradient(90deg, #00e6c3 0%, #38ffb3 100%);
@@ -87,10 +104,18 @@
       color: #38b36a;
       font-weight: 600;
       margin-top: 18px;
+      font-size: 1.1rem;
     }
     @media (max-width: 500px) {
-      .modal-container { padding: 12px 2vw; }
-      .modal { padding: 12px 10px; }
+      .modal-container { padding: 0 2vw; }
+      .modal { padding: 12px 4px; max-width: 98vw; }
+      .btn-primary { font-size: 1rem; padding: 12px 8px; }
+      .modal label { font-size: 0.98rem; }
+      .modal input { font-size: 0.98rem; }
+    }
+    @media (max-width: 400px) {
+      .modal { padding: 8px 2px; }
+      .btn-primary { font-size: 0.95rem; }
     }
   </style>
 </head>

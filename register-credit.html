@@ -6,6 +6,9 @@
   <title>Aplică pentru Credit - ON CREDIT</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
+    html, body, * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0; padding: 0;
       font-family: 'Inter', Arial, sans-serif;
@@ -187,12 +190,11 @@
       cursor: pointer;
     }
     @media (max-width: 400px) {
-      .modal {
-        padding: 16px;
-      }
-      .modal h3 {
-        font-size: 1.25rem;
-      }
+      .register-container { padding: 8px 1vw; }
+      .card-visual { padding: 8px 2px; }
+      .register-form input, .register-form label { font-size: 0.95rem; }
+      .btn-primary { font-size: 0.95rem; padding: 10px 6px; }
+      .modal { padding: 8px 2px; }
     }
   </style>
 </head>

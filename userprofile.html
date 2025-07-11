@@ -6,6 +6,9 @@
   <title>Profil Utilizator - ON CREDIT</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
+    html, body, * {
+      box-sizing: border-box;
+    }
     /* GLOBAL STYLES */
     html { scroll-behavior: smooth; }
     body {
@@ -353,6 +356,12 @@
       header { height: 56px;}
       .btn-primary { font-size: 1rem; padding: 12px 18px;}
       .profile-section { margin-top: 70px;}
+    }
+    @media (max-width: 400px) {
+      .profile-card, .transactions-panel { padding: 8px 2px; }
+      .modal { padding: 8px 2px; }
+      .btn-primary { font-size: 0.95rem; padding: 10px 6px; }
+      .container { padding: 0 2px; }
     }
 
     /* Subtle background gradient for body */
