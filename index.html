@@ -359,6 +359,28 @@
     .whatsapp-btn {
       background: linear-gradient(135deg, #25d366 0%, #38ffb3 100%);
     }
+
+    /* Section Separators */
+    .section-separator {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #38ffb3 50%, transparent 100%);
+      margin: 0 auto 48px auto;
+      position: relative;
+      box-shadow: 0 0 20px rgba(56,255,179,0.3);
+    }
+    .section-separator::before {
+      content: "";
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      background: #38ffb3;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(56,255,179,0.6);
+    }
     .hero h1 {
       font-size: 2.7rem;
       font-weight: 700;
@@ -602,6 +624,9 @@
       .support-feature { width: 160px; padding: 20px 16px; }
       .support-buttons { gap: 16px; }
       .btn-support { padding: 14px 24px; font-size: 1rem; }
+      
+      /* Section Separators Mobile */
+      .section-separator { margin-bottom: 32px; }
     }
     @media (max-width: 400px) {
       :root {
@@ -636,6 +661,9 @@
       .support-feature { width: 200px; padding: 16px 12px; }
       .support-buttons { flex-direction: column; align-items: center; }
       .btn-support { width: 100%; max-width: 250px; }
+      
+      /* Section Separators Small Mobile */
+      .section-separator { margin-bottom: 24px; }
     }
     /* Hamburger menu for mobile */
     .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px;}
@@ -828,6 +856,7 @@
   </section>
   <!-- Beneficii -->
   <section id="benefits">
+    <div class="section-separator"></div>
     <h2 class="aos">Beneficii</h2>
     <div class="benefits">
       <div class="benefit aos" data-aos-delay="0">
@@ -854,6 +883,7 @@
   </section>
   <!-- Testimoniale -->
   <section id="testimonials">
+    <div class="section-separator"></div>
     <h2 class="aos">Ce spun utilizatorii ?</h2>
     <div class="benefits">
       <div class="benefit aos" data-aos-delay="0">
