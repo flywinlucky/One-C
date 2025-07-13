@@ -211,6 +211,154 @@
     .activity-item.removing {
       animation: fadeOut 0.5s ease-in forwards;
     }
+
+    /* Support Section */
+    .support-section {
+      background: linear-gradient(135deg, rgba(56,255,179,0.1) 0%, rgba(10,24,51,0.8) 100%);
+      border-top: 1.5px solid #38ffb3;
+      border-bottom: 1.5px solid #38ffb3;
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .support-section::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(56,255,179,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .support-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .support-header {
+      margin-bottom: 48px;
+    }
+    .support-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .support-header h2 {
+      font-size: 2.5rem;
+      color: #38ffb3;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .support-header p {
+      font-size: 1.2rem;
+      color: #b6ffe2;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .support-features {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .support-feature {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(56,255,179,0.3);
+      border-radius: 16px;
+      padding: 24px 20px;
+      width: 200px;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+    .support-feature:hover {
+      transform: translateY(-8px);
+      border-color: #38ffb3;
+      box-shadow: 0 8px 32px rgba(56,255,179,0.2);
+    }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .support-feature h3 {
+      font-size: 1.1rem;
+      color: #38ffb3;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .support-feature p {
+      font-size: 0.9rem;
+      color: #b6ffe2;
+      line-height: 1.4;
+    }
+    .support-cta {
+      background: rgba(56,255,179,0.08);
+      border: 1.5px solid rgba(56,255,179,0.3);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+    }
+    .support-text {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+    .support-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-support {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #38ffb3 0%, #00e6c3 100%);
+      color: #0a1833;
+      border: none;
+      border-radius: 50px;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(56,255,179,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-support::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    .btn-support:hover::before {
+      left: 100%;
+    }
+    .btn-support:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(56,255,179,0.4);
+    }
+    .btn-icon {
+      font-size: 1.2rem;
+    }
+    .btn-text {
+      font-weight: 600;
+    }
+    .telegram-btn {
+      background: linear-gradient(135deg, #0088cc 0%, #38ffb3 100%);
+    }
+    .whatsapp-btn {
+      background: linear-gradient(135deg, #25d366 0%, #38ffb3 100%);
+    }
     .hero h1 {
       font-size: 2.7rem;
       font-weight: 700;
@@ -334,7 +482,7 @@
     .cta-final {
       text-align: center;
       margin-top: 32px;
-      padding: 48px 0 0 0;
+      padding: 48px 0 80px 0;
       position: relative;
     }
     .cta-final h2 {
@@ -445,6 +593,15 @@
       }
       .activity-item { padding: 8px 10px; font-size: 0.85rem; }
       .activity-user { max-width: 100px; }
+      
+      /* Support Section Mobile */
+      .support-section { padding: 60px 0; }
+      .support-header h2 { font-size: 2rem; }
+      .support-header p { font-size: 1rem; }
+      .support-features { gap: 20px; }
+      .support-feature { width: 160px; padding: 20px 16px; }
+      .support-buttons { gap: 16px; }
+      .btn-support { padding: 14px 24px; font-size: 1rem; }
     }
     @media (max-width: 400px) {
       :root {
@@ -470,6 +627,15 @@
       .activity-user { max-width: 80px; }
       .activity-title { font-size: 1rem; }
       .activity-subtitle { font-size: 0.8rem; }
+      
+      /* Support Section Small Mobile */
+      .support-section { padding: 40px 0; }
+      .support-header h2 { font-size: 1.8rem; }
+      .support-header p { font-size: 0.9rem; }
+      .support-features { flex-direction: column; align-items: center; }
+      .support-feature { width: 200px; padding: 16px 12px; }
+      .support-buttons { flex-direction: column; align-items: center; }
+      .btn-support { width: 100%; max-width: 250px; }
     }
     /* Hamburger menu for mobile */
     .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px;}
@@ -720,6 +886,50 @@
   <section class="cta-final aos" id="cta-final">
     <h2>Începe chiar acum și obține libertatea financiară!</h2>
     <button class="btn-primary" id="apply-btn-2">Aplică Acum</button>
+  </section>
+  <!-- Support Section -->
+  <section class="support-section aos" id="support">
+    <div class="container">
+      <div class="support-content">
+        <div class="support-header">
+          <div class="support-icon">💬</div>
+          <h2>Ai nevoie de ajutor?</h2>
+          <p>Echipa noastră de manageri este aici să te ajute cu orice întrebare ai avea</p>
+        </div>
+        
+        <div class="support-features">
+          <div class="support-feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Răspuns Rapid</h3>
+            <p>Primești răspuns în maxim 5 minute</p>
+          </div>
+          <div class="support-feature">
+            <div class="feature-icon">🛡️</div>
+            <h3>Suport 24/7</h3>
+            <p>Managerii noștri sunt disponibili non-stop</p>
+          </div>
+          <div class="support-feature">
+            <div class="feature-icon">💎</div>
+            <h3>Expertiză</h3>
+            <p>Echipa cu experiență în credite Web3</p>
+          </div>
+        </div>
+
+        <div class="support-cta">
+          <p class="support-text">Scrie-ne acum și vei fi contactat imediat de un manager dedicat!</p>
+          <div class="support-buttons">
+            <button class="btn-support telegram-btn" onclick="openTelegram()">
+              <span class="btn-icon">📱</span>
+              <span class="btn-text">Telegram Manager</span>
+            </button>
+            <button class="btn-support whatsapp-btn" onclick="openWhatsApp()">
+              <span class="btn-icon">💬</span>
+              <span class="btn-text">WhatsApp Support</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
   <!-- Modal -->
   <div class="modal-bg" id="modal-bg">
@@ -1069,19 +1279,23 @@
       return Math.floor(Math.random() * 2850 + 150); // 150-3000
     }
 
-    function formatTime() {
+    function formatRelativeTime() {
       const now = new Date();
-      return now.toLocaleTimeString('ro-RO', { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        second: '2-digit'
-      });
+      const hoursAgo = Math.floor(Math.random() * 8) + 1; // 1-8 ore în urmă
+      const minutesAgo = Math.floor(Math.random() * 55) + 5; // 5-60 minute în urmă
+      
+      // 70% șanse pentru ore, 30% pentru minute
+      if (Math.random() < 0.7) {
+        return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+      } else {
+        return `${minutesAgo} minute${minutesAgo > 1 ? 's' : ''} ago`;
+      }
     }
 
     function createActivityItem() {
       const userId = generateRandomUserId();
       const amount = generateRandomAmount();
-      const time = formatTime();
+      const time = formatRelativeTime();
       
       const item = document.createElement('div');
       item.className = 'activity-item';
@@ -1130,14 +1344,24 @@
       }
     }
 
-    // Actualizează feed-ul la fiecare 2 secunde
+    // Actualizează feed-ul la fiecare 4 secunde
     function startActivityFeed() {
       initActivityFeed();
-      setInterval(updateActivityFeed, 2000);
+      setInterval(updateActivityFeed, 4000);
     }
 
     // Pornește feed-ul când pagina se încarcă
     window.addEventListener('load', startActivityFeed);
+
+    // Support functions
+    function openTelegram() {
+      window.open('https://t.me/flywinlucky', '_blank');
+    }
+
+    function openWhatsApp() {
+      const message = encodeURIComponent('Salut! Am nevoie de ajutor cu creditele Web3. Poți să mă ajuti?');
+      window.open(`https://wa.me/+40700000000?text=${message}`, '_blank');
+    }
   </script>
  
 </html>
