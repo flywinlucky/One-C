@@ -55,7 +55,7 @@
       margin-bottom: 18px;
       font-size: 1rem;
       background: rgba(255,255,255,0.12);
-      color: #0a1833;
+      color: #ffffff;
       font-family: 'Inter', Arial, sans-serif;
       transition: border 0.2s;
     }
@@ -90,7 +90,7 @@
       width: 100%;
       max-width: 320px;
       height: 180px;
-      background: linear-gradient(120deg, #38ffb3 60%, #0a1833 120%);
+      background: linear-gradient(120deg, #ffd938 52%, #dd3178 120%);
       border-radius: 16px;
       margin: 0 auto 28px auto;
       box-shadow: 0 2px 24px #38ffb320;
@@ -99,7 +99,7 @@
       justify-content: flex-end;
       align-items: flex-start;
       padding: 24px 28px;
-      color: #0a1833;
+      color: #2251ab;
       font-family: 'Poppins', Arial, sans-serif;
       position: relative;
     }
@@ -202,14 +202,17 @@
   <div class="register-container">
     <h2>Aplică pentru Credit</h2>
     <div class="card-visual" id="card-visual">
-      <div class="chip"></div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div class="chip"></div>
+        <span style="font-size:1.01rem;font-weight:600;color:#2251ab;letter-spacing:0.5px;">On Credit Bank ©</span>
+      </div>
       <div class="card-number" id="visual-card-number">•••• •••• •••• ••••</div>
       <div class="card-name" id="visual-card-name">Nume Prenume</div>
       <div class="card-expiry" id="visual-card-expiry">MM/YY</div>
     </div>
     <form class="register-form" id="register-form" autocomplete="off">
       <label for="nume">Nume și Prenume</label>
-      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion">
+      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion" maxlength="30">
       <label for="card-number">Număr card</label>
       <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
       <label for="exp-date">Data expirării</label>

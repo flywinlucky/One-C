@@ -428,10 +428,12 @@
   <!-- Panel Istoric Tranzacții -->
   <section class="transactions-section">
     <div class="transactions-panel">
-      <h3>Istoric tranzacții</h3>
-      <div class="transactions-empty">
+      <h3 style="margin-bottom:18px;">Istoric tranzacții</h3>
+      <div style="border-bottom:1px solid rgba(56,255,179,0.13);margin-bottom:2px;"></div>
+      <div class="transactions-empty" id="transactions-empty">
         Nu există tranzacții efectuate momentan.
       </div>
+      <div id="transactions-list"></div>
       <!-- În viitor aici se vor afișa tranzacțiile reale -->
     </div>
   </section>
@@ -506,6 +508,42 @@
         ' ' + (user.currency || 'USDT');
       // Bara sus cu nume și amount
       document.getElementById('user-info').textContent = user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'USDT') + ')';
+      // --- Adaugă tranzacție falsă ---
+      const transactionsList = document.getElementById('transactions-list');
+      const transactionsEmpty = document.getElementById('transactions-empty');
+      // Calculează timpul cu 5-10 minute în urmă
+      const now = new Date();
+      const minutesAgo = Math.floor(Math.random() * 6) + 5; // 5-10 minute
+      const txTime = new Date(now.getTime() - minutesAgo * 60000);
+      // Funcție pentru lunile în română
+      const luni = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+      const zi = txTime.getDate().toString().padStart(2, '0');
+      const luna = luni[txTime.getMonth()];
+      const ora = txTime.getHours().toString().padStart(2, '0');
+      const minut = txTime.getMinutes().toString().padStart(2, '0');
+      const dataStr = `${zi} ${luna} ${ora}:${minut}`;
+      // Creează elementul de tranzacție
+      const txDiv = document.createElement('div');
+      txDiv.className = 'transaction-item';
+      txDiv.style = `
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0 12px 0;
+        border-bottom: 1px solid rgba(56,255,179,0.13);
+        font-size: 1.08rem;
+        gap: 0;
+        background: none;
+      `;
+      txDiv.innerHTML = `
+        <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">De la: <span style='color:#38ffb3;font-weight:600;'>On Credit</span></span>
+        <span style="flex:1;text-align:center;color:#38ffb3;font-weight:700;font-size:1.22rem;letter-spacing:0.5px;">+${Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} ${(user.currency || 'USDT')}</span>
+        <span style="flex:1;text-align:right;color:#b6ffe2;font-size:0.93rem;opacity:0.85;white-space:nowrap;">${dataStr}</span>
+      `;
+      transactionsList.appendChild(txDiv);
+      // Ascunde mesajul empty
+      if (transactionsEmpty) transactionsEmpty.style.display = 'none';
     }
 
     // Logout modal logic
