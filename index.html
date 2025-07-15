@@ -952,10 +952,10 @@
               <span class="btn-icon">📱</span>
               <span class="btn-text">Telegram Manager</span>
             </button>
-            <button class="btn-support whatsapp-btn" onclick="openWhatsApp()">
+            <!--<button class="btn-support whatsapp-btn" onclick="openWhatsApp()">
               <span class="btn-icon">💬</span>
               <span class="btn-text">WhatsApp Support</span>
-            </button>
+            </button>-->
           </div>
         </div>
       </div>
@@ -974,16 +974,16 @@
         <input type="text" id="country" name="country" required placeholder="Ex: România">
 
         <label for="lucreaza">Lucrezi în prezent?</label>
-        <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
-          <label style="display:flex;align-items:flex-start;gap:6px;cursor:pointer;">
-            <input type="radio" name="lucreaza" value="Da" required style="accent-color:#38ffb3;"> Da
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-bottom:18px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
+            <input type="radio" name="lucreaza" value="Da" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Da
           </label>
-          <label style="display:flex;align-items:flex-start;gap:6px;cursor:pointer;">
-            <input type="radio" name="lucreaza" value="Nu" required style="accent-color:#38ffb3;"> Nu
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
+            <input type="radio" name="lucreaza" value="Nu" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Nu
           </label>
         </div>
 
-        <label for="suma">Sumă dorită (USDT)</label>
+        <label for="suma">Sumă dorită</label>
         <input type="number" id="suma" name="suma" min="10" max="100000" required placeholder="Ex: 500">
 
         <label for="telegram">Link către Telegram</label>
