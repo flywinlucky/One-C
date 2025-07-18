@@ -1072,6 +1072,29 @@
       </div>
     </div>
   </div>
+  <!-- Support Modal -->
+  <div class="modal-bg" id="support-modal" style="display:none;">
+    <div class="modal" style="min-width:320px;max-width:95vw;position:relative;">
+      <button class="close-modal" id="close-support-modal" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
+      <h3 style="color:#38ffb3;margin-top:0;">Aveți nevoie de ajutor?</h3>
+      <div style="margin-bottom:18px;font-size:1.08rem;color:#0a1833;">Contactați managerul pentru suport rapid.</div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:18px;">
+        <button class="btn-primary" id="contact-manager-btn" style="min-width:140px;">Contact Manager</button>
+        <button class="btn-primary" id="cancel-support-btn" style="min-width:100px;background:#e74c3c;color:#fff;">Anulează</button>
+      </div>
+    </div>
+  </div>
+  <!-- Credit Request Success Modal -->
+  <div class="modal-bg" id="credit-success-modal" style="display:none;">
+    <div class="modal" style="min-width:320px;max-width:95vw;position:relative;">
+      <button class="close-modal" id="close-credit-success" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
+      <h3 style="color:#38ffb3;margin-top:0;">🎉 Felicitari Cerere trimisă!</h3>
+      <div style="margin-bottom:18px;font-size:1.08rem;color:#0a1833;">Cererea a fost trimisă cu succes!<br>Așteptați mesajul managerului, vă va contacta cât mai curând.</div>
+      <div style="display:flex;justify-content:center;margin-top:18px;">
+        <button class="btn-primary" id="ok-credit-success" style="min-width:120px;background:#38ffb3;color:#0a1833;">OK</button>
+      </div>
+    </div>
+  </div>
   <!-- Footer -->
   <footer>
     <div class="footer-links">
@@ -1228,8 +1251,8 @@
       } catch (err) {
         // Ignoră erorile, doar UX
       }
-      document.getElementById('form-success').style.display = 'block';
-      setTimeout(closeModal, 2000);
+      closeModal();
+      showCreditSuccessModal();
     };
 
     // User session logic
@@ -1441,6 +1464,52 @@
       const message = encodeURIComponent('Salut! Am nevoie de ajutor cu creditele Web3. Poți să mă ajuti?');
       window.open(`https://wa.me/+40700000000?text=${message}`, '_blank');
     }
+
+    // Support Modal logic
+    const supportBtn = document.querySelector('a[href="https://t.me/flywinlucky"], button#support-btn');
+    const supportModal = document.getElementById('support-modal');
+    const closeSupportModal = document.getElementById('close-support-modal');
+    const cancelSupportBtn = document.getElementById('cancel-support-btn');
+    const contactManagerBtn = document.getElementById('contact-manager-btn');
+    if (supportBtn) {
+      supportBtn.onclick = function(e) {
+        e.preventDefault();
+        supportModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      };
+    }
+    closeSupportModal.onclick = function() {
+      supportModal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    cancelSupportBtn.onclick = function() {
+      supportModal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    supportModal.onclick = function(e) {
+      if (e.target === this) closeSupportModal.onclick();
+    };
+    contactManagerBtn.onclick = function() {
+      window.open('https://t.me/flywinlucky', '_blank');
+    };
+
+    // Credit Request Success Modal logic
+    const creditSuccessModal = document.getElementById('credit-success-modal');
+    const closeCreditSuccess = document.getElementById('close-credit-success');
+    const okCreditSuccess = document.getElementById('ok-credit-success');
+    function showCreditSuccessModal() {
+      creditSuccessModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+    function hideCreditSuccessModal() {
+      creditSuccessModal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    closeCreditSuccess.onclick = hideCreditSuccessModal;
+    okCreditSuccess.onclick = hideCreditSuccessModal;
+    creditSuccessModal.onclick = function(e) {
+      if (e.target === this) hideCreditSuccessModal();
+    };
   </script>
  
 </html>
