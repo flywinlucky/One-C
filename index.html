@@ -987,7 +987,7 @@
         <div class="support-cta">
           <p class="support-text">Scrie-ne acum și vei fi contactat imediat de un manager dedicat!</p>
           <div class="support-buttons">
-            <button class="btn-support telegram-btn" onclick="openTelegram()">
+            <button class="btn-support telegram-btn" id="telegram-manager-btn">
               <span class="btn-icon">📱</span>
               <span class="btn-text">Telegram Manager</span>
             </button>
@@ -1467,17 +1467,18 @@
 
     // Support Modal logic
     const supportBtn = document.querySelector('a[href="https://t.me/flywinlucky"], button#support-btn');
+    const telegramManagerBtn = document.getElementById('telegram-manager-btn');
     const supportModal = document.getElementById('support-modal');
     const closeSupportModal = document.getElementById('close-support-modal');
     const cancelSupportBtn = document.getElementById('cancel-support-btn');
     const contactManagerBtn = document.getElementById('contact-manager-btn');
-    if (supportBtn) {
-      supportBtn.onclick = function(e) {
-        e.preventDefault();
-        supportModal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      };
+    function openSupportModal(e) {
+      if (e) e.preventDefault();
+      supportModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     }
+    if (supportBtn) supportBtn.onclick = openSupportModal;
+    if (telegramManagerBtn) telegramManagerBtn.onclick = openSupportModal;
     closeSupportModal.onclick = function() {
       supportModal.style.display = 'none';
       document.body.style.overflow = '';
