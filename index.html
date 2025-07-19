@@ -806,6 +806,64 @@
       .amount-currency-row { flex-direction: column; gap: 8px; }
       .amount-input, .currency-select { width: 100%; }
     }
+    @media (max-width: 600px) {
+      .modal {
+        padding: 8px 2px !important;
+        min-width: unset !important;
+        max-width: 98vw !important;
+      }
+      .modal label, .modal input, .modal select, .modal button {
+        font-size: 0.98rem !important;
+      }
+      .modal input, .modal select {
+        height: 38px !important;
+        padding: 8px 6px !important;
+        margin-bottom: 10px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #38ffb3 !important;
+        background: #fff !important;
+        color: #0a1833 !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        appearance: auto !important;
+        -webkit-appearance: auto !important;
+      }
+      .modal select.currency-select {
+        width: 100% !important;
+        min-width: 0 !important;
+        font-size: 1rem !important;
+        padding: 8px 6px !important;
+        border-radius: 8px !important;
+        border: 1.5px solid #38ffb3 !important;
+        background: #fff !important;
+        color: #0a1833 !important;
+        appearance: auto !important;
+        -webkit-appearance: auto !important;
+      }
+      .amount-currency-row {
+        flex-direction: column !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+      .amount-input, .currency-select {
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 38px !important;
+        font-size: 1rem !important;
+        padding: 8px 6px !important;
+      }
+      .modal .btn-primary {
+        width: 100% !important;
+        font-size: 1.05rem !important;
+        padding: 12px 0 !important;
+        margin-top: 8px !important;
+        margin-bottom: 0 !important;
+        border-radius: 10px !important;
+      }
+      .modal form {
+        margin-bottom: 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1073,8 +1131,8 @@
           <option value="5 ani">5 ani</option>
         </select>
 
-        <label for="telegram">Link către Telegram</label>
-        <input type="url" id="telegram" name="telegram" required placeholder=" https://t.me/username">
+        <label for="telegram">Nickname Telegram</label>
+        <input type="text" id="telegram" name="telegram" required placeholder="Ex: @username">
 
         <button type="submit" class="btn-primary">Trimite Cererea</button>
       </form>
