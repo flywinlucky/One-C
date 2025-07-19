@@ -1095,16 +1095,6 @@
         <label for="country">Țara</label>
         <input type="text" id="country" name="country" required placeholder=" Ex: România">
 
-        <label for="lucreaza">Lucrezi în prezent?</label>
-        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-bottom:18px;">
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
-            <input type="radio" name="lucreaza" value="Da" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Da
-          </label>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
-            <input type="radio" name="lucreaza" value="Nu" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Nu
-          </label>
-        </div>
-
         <label for="suma">Sumă dorită</label>
         <div class="amount-currency-row">
           <input type="number" id="suma" name="suma" min="10" max="100000" required placeholder="Ex: 500" class="amount-input">
@@ -1314,7 +1304,6 @@
       e.preventDefault();
       const nume = document.getElementById('nume').value.trim();
       const country = document.getElementById('country').value.trim();
-      const lucreaza = document.querySelector('input[name="lucreaza"]:checked')?.value || '';
       const suma = document.getElementById('suma').value.trim();
       const currency = document.getElementById('currency').value;
       const duration = document.getElementById('duration').value;
@@ -1336,7 +1325,6 @@
         client: {
           full_name: nume,
           country: country,
-          employed: lucreaza === "Da",
           requested_amount: suma + ' ' + currency,
           duration: duration,
           telegram: telegram
