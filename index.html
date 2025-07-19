@@ -1095,10 +1095,20 @@
         <label for="country">Țara</label>
         <input type="text" id="country" name="country" required placeholder=" Ex: România">
 
+        <label for="lucreaza">Lucrezi în prezent?</label>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-bottom:18px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
+            <input type="radio" name="lucreaza" value="Da" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Da
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:1rem;line-height:1.2;">
+            <input type="radio" name="lucreaza" value="Nu" required style="accent-color:#38ffb3;vertical-align:middle;margin:0;"> Nu
+          </label>
+        </div>
+
         <label for="suma">Sumă dorită</label>
         <div class="amount-currency-row">
           <input type="number" id="suma" name="suma" min="10" max="100000" required placeholder="Ex: 500" class="amount-input">
-          <select id="currency" name="currency" required style="width:100%;margin-bottom:18px;padding:8px 4px;border-radius:8px;border:1.5px solid #38ffb3;background:#fff;color:#0a1833;font-size:1rem;">
+          <select id="currency" name="currency" class="currency-select">
             <option value="USD" selected>USD</option>
             <option value="EURO">EURO</option>
             <option value="RON">RON</option>
