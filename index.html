@@ -1059,6 +1059,20 @@
           </select>
         </div>
 
+        <label for="duration">Durata creditului</label>
+        <select id="duration" name="duration" required style="width:100%;margin-bottom:18px;padding:8px 4px;border-radius:8px;border:1.5px solid #38ffb3;background:#fff;color:#0a1833;font-size:1rem;">
+          <option value="2 luni">2 luni</option>
+          <option value="4 luni">4 luni</option>
+          <option value="6 luni">6 luni</option>
+          <option value="8 luni">8 luni</option>
+          <option value="12 luni">12 luni</option>
+          <option value="1 an">1 an</option>
+          <option value="2 ani">2 ani</option>
+          <option value="3 ani">3 ani</option>
+          <option value="4 ani">4 ani</option>
+          <option value="5 ani">5 ani</option>
+        </select>
+
         <label for="telegram">Link către Telegram</label>
         <input type="url" id="telegram" name="telegram" required placeholder=" https://t.me/username">
 
@@ -1245,6 +1259,7 @@
       const lucreaza = document.querySelector('input[name="lucreaza"]:checked')?.value || '';
       const suma = document.getElementById('suma').value.trim();
       const currency = document.getElementById('currency').value;
+      const duration = document.getElementById('duration').value;
       const telegram = document.getElementById('telegram').value.trim();
 
       // Generează un ID unic pentru lead și salvează-l în localStorage
@@ -1265,6 +1280,7 @@
           country: country,
           employed: lucreaza === "Da",
           requested_amount: suma + ' ' + currency,
+          duration: duration,
           telegram: telegram
         }
       };
