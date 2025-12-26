@@ -656,15 +656,37 @@
     }
     function initPortfolioStats() {
       const curr = Number(user && user.amount) || 0;
-      const start = curr * (0.85 + Math.random()*0.25);
-      const days = 30;
-      const arr = [];
-      for (let i = 0; i < days; i++) {
-        const t = i/(days-1);
-        const v = start + (curr - start) * t + Math.sin(i/5) * (curr - start) * 0.05 + (Math.random()-0.5) * (curr - start) * 0.03;
-        arr.push(Math.max(0.01, v));
+      const cacheKey = 'lumix_portfolio_cache';
+      const now = Date.now();
+      const ttl = 5 * 60 * 1000; // 5 minutes
+      let cache = null;
+      try { cache = JSON.parse(localStorage.getItem(cacheKey)); } catch {}
+
+      if (cache && (now - cache.updatedAt) < ttl && Array.isArray(cache.series)) {
+        pfSeries = cache.series.slice();
+        // Align last point with current balance for visual consistency
+        if (pfSeries.length) pfSeries[pfSeries.length - 1] = curr;
+      } else {
+        const start = curr * (0.85 + Math.random()*0.25);
+        const days = 30;
+        const arr = [];
+        for (let i = 0; i < days; i++) {
+          const t = i/(days-1);
+          const v = start + (curr - start) * t + Math.sin(i/5) * (curr - start) * 0.05 + (Math.random()-0.5) * (curr - start) * 0.03;
+          arr.push(Math.max(0.01, v));
+        }
+        pfSeries = arr;
+        const lumixPct = 0.6 + Math.random()*0.25; // 60-85%
+        const usdtPct = 0.1 + Math.random()*0.2;  // 10-30%
+        const altPct = Math.max(0, 1 - lumixPct - usdtPct);
+        const toCache = {
+          series: pfSeries,
+          allocation: { lumixPct, usdtPct, altPct },
+          updatedAt: now
+        };
+        try { localStorage.setItem(cacheKey, JSON.stringify(toCache)); } catch {}
       }
-      pfSeries = arr;
+
       const last = curr;
       const prev = pfSeries[Math.max(0, pfSeries.length - 2)];
       const pnl24 = last - prev;
@@ -706,22 +728,32 @@
       if (pfAvgEl) pfAvgEl.textContent = avgTrade.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
       drawPFLineChart('portfolio-chart', pfSeries.concat([curr]));
 
-      // Allocation chart (synthetic split)
-      const lumixPct = 0.6 + Math.random()*0.25; // 60-85%
-      const usdtPct = 0.1 + Math.random()*0.2;  // 10-30%
-      const altPct = Math.max(0, 1 - lumixPct - usdtPct);
-      drawDonutChart('allocation-chart', [
-        { label:'LUMIX', value: lumixPct, color: 'rgba(56,255,179,0.9)' },
-        { label:'USDT', value: usdtPct, color: 'rgba(255,225,102,0.9)' },
-        { label:'ALT', value: altPct, color: 'rgba(160,200,255,0.9)' }
-      ]);
+      // Allocation chart (use cache if available)
+      let alloc = null;
+      try { const c = JSON.parse(localStorage.getItem(cacheKey)); alloc = c && c.allocation; } catch {}
+      if (alloc) {
+        drawDonutChart('allocation-chart', [
+          { label:'LUMIX', value: alloc.lumixPct, color: 'rgba(56,255,179,0.9)' },
+          { label:'USDT', value: alloc.usdtPct, color: 'rgba(255,225,102,0.9)' },
+          { label:'ALT', value: alloc.altPct, color: 'rgba(160,200,255,0.9)' }
+        ]);
+      }
     }
     window.addEventListener('load', initPortfolioStats);
     window.addEventListener('resize', () => {
       if (pfSeries) {
         drawPFLineChart('portfolio-chart', pfSeries.concat([Number(user && user.amount)||0]));
-        // Redraw allocation
-        initPortfolioStats();
+        // Redraw allocation from cache without regenerating
+        const cacheKey = 'lumix_portfolio_cache';
+        let alloc = null;
+        try { const c = JSON.parse(localStorage.getItem(cacheKey)); alloc = c && c.allocation; } catch {}
+        if (alloc) {
+          drawDonutChart('allocation-chart', [
+            { label:'LUMIX', value: alloc.lumixPct, color: 'rgba(56,255,179,0.9)' },
+            { label:'USDT', value: alloc.usdtPct, color: 'rgba(255,225,102,0.9)' },
+            { label:'ALT', value: alloc.altPct, color: 'rgba(160,200,255,0.9)' }
+          ]);
+        }
       }
     });
 
