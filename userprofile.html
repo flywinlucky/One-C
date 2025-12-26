@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Profil Utilizator - ON CREDIT</title>
+  <title>Cabinet Portofel - LUMIX</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
     html, body, * {
@@ -397,7 +397,7 @@
   <header>
     <div class="container nav">
       <div class="logo">
-        <a href="index.html" style="color:hsl(157, 100%, 61%);text-decoration:none;display:inline-block;cursor:pointer;">ON CREDIT</a>
+        <a href="index.html" style="color:hsl(157, 100%, 61%);text-decoration:none;display:inline-block;cursor:pointer;">LUMIX</a>
         <!--<div style="font-size:0.98rem;color:hsl(157, 100%, 61%);font-weight:600;line-height:1.2;text-align:center;margin-top:2px;letter-spacing:0.5px;">Top in 2025 🔥</div>-->
       </div>
       <nav>
@@ -417,12 +417,12 @@
   <section class="profile-section">
     <div class="profile-card">
       <h2 id="profile-nume">Bun venit!</h2>
-      <div class="profile-label">Balans cont:</div>
+      <div class="profile-label">Balans portofel:</div>
       <div class="profile-balance" id="profile-amount">0.00</div>
       <!--<div class="profile-label" id="profile-currency">Valută: </div>-->
       <div class="profile-label">Ultima actualizare: 07.06.2024</div>
       <!--<button class="btn-primary" onclick="window.location.href='index.html'">Logout</button>-->
-      <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Retrage Soldul</button>
+      <button class="btn-primary" id="withdraw-btn" style="margin-top:18px;">Trimite LUMIX</button>
     </div>
   </section>
 
@@ -459,19 +459,19 @@
   <div class="modal-bg" id="withdraw-modal-bg" style="display:none;">
     <div class="modal" style="min-width:320px;max-width:95vw;">
       <button class="close-modal" id="close-withdraw-modal" style="position:absolute;top:12px;right:18px;background:none;border:none;font-size:1.5rem;color:#0a1833;cursor:pointer;">&times;</button>
-      <h3>Confirmare Retragere</h3>
-    
-      <form id="withdraw-form" autocomplete="off">
-      <label for="withdraw-code">Semnează contractul și retrage banii!</label>
-      <!-- <input type="text" id="withdraw-code" name="withdraw-code" required placeholder="Introdu codul"> -->
-      <button type="submit" class="btn-primary">Continua</button>
+      <h3>Trimite LUMIX</h3>
+      <form id="transfer-form" autocomplete="off">
+        <label for="recipient">Adresă destinatar</label>
+        <input type="text" id="recipient" name="recipient" required placeholder="Ex: 0xA1B2..." />
+        <label for="transfer-amount">Sumă</label>
+        <input type="number" id="transfer-amount" name="transfer-amount" required min="0.0001" step="0.0001" placeholder="Ex: 10.5" />
+        <button type="submit" class="btn-primary">Trimite</button>
       </form>
-
-      <div id="withdraw-success" style="display:none; margin-top:18px; color:#38b36a; font-weight:600;">
-        Retragerea a fost confirmată!
+      <div id="transfer-success" style="display:none; margin-top:18px; color:#38b36a; font-weight:600;">
+        Tranzacția a fost trimisă!
       </div>
-      <div id="withdraw-error" style="display:none; margin-top:18px; color:#e74c3c; font-weight:600;">
-        Cod incorect!
+      <div id="transfer-error" style="display:none; margin-top:18px; color:#e74c3c; font-weight:600;">
+        Eroare: verifică adresa și suma.
       </div>
     </div>
   </div>
@@ -506,9 +506,9 @@
       document.getElementById('profile-nume').textContent = 'Bun venit, ' + user.nume + '!';
       document.getElementById('profile-amount').textContent =
         Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
-        ' ' + (user.currency || 'USDT');
-      // Bara sus cu nume și amount
-      document.getElementById('user-info').textContent = user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'USDT') + ')';
+        ' ' + (user.currency || 'LUMIX');
+      document.getElementById('user-info').textContent =
+        user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'LUMIX') + ')';
       // --- Adaugă tranzacție falsă ---
       const transactionsList = document.getElementById('transactions-list');
       const transactionsEmpty = document.getElementById('transactions-empty');
@@ -539,7 +539,7 @@
       `;
       txDiv.innerHTML = `
         <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">De la: <span style='color:#38ffb3;font-weight:600;'>On Credit</span></span>
-        <span style="flex:1;text-align:center;color:#38ffb3;font-weight:700;font-size:1.22rem;letter-spacing:0.5px;">+${Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} ${(user.currency || 'USDT')}</span>
+        <span style="flex:1;text-align:center;color:#38ffb3;font-weight:700;font-size:1.22rem;letter-spacing:0.5px;">+${Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} ${(user.currency || 'LUMIX')}</span>
         <span style="flex:1;text-align:right;color:#b6ffe2;font-size:0.93rem;opacity:0.85;white-space:nowrap;">${dataStr}</span>
       `;
       transactionsList.appendChild(txDiv);
@@ -573,49 +573,83 @@
       window.location.href = 'index.html';
     };
 
-    // Withdraw modal logic
+    // Transfer modal logic (replaces withdraw code)
     const withdrawBtn = document.getElementById('withdraw-btn');
     const withdrawModalBg = document.getElementById('withdraw-modal-bg');
     const closeWithdrawModal = document.getElementById('close-withdraw-modal');
-    const withdrawForm = document.getElementById('withdraw-form');
-    const withdrawSuccess = document.getElementById('withdraw-success');
-    const withdrawError = document.getElementById('withdraw-error');
+    const transferForm = document.getElementById('transfer-form');
+    const transferSuccess = document.getElementById('transfer-success');
+    const transferError = document.getElementById('transfer-error');
+
     withdrawBtn.onclick = function() {
       withdrawModalBg.style.display = 'flex';
       document.body.style.overflow = 'hidden';
-      withdrawSuccess.style.display = 'none';
-      withdrawError.style.display = 'none';
-      withdrawForm.reset();
+      transferSuccess.style.display = 'none';
+      transferError.style.display = 'none';
+      transferForm.reset();
     };
     closeWithdrawModal.onclick = function() {
       withdrawModalBg.style.display = 'none';
       document.body.style.overflow = '';
-      withdrawSuccess.style.display = 'none';
-      withdrawError.style.display = 'none';
-      withdrawForm.reset();
+      transferSuccess.style.display = 'none';
+      transferError.style.display = 'none';
+      transferForm.reset();
     };
     withdrawModalBg.onclick = function(e) {
       if (e.target === this) closeWithdrawModal.onclick();
     };
-    withdrawForm.onsubmit = function(e) {
+
+    transferForm.onsubmit = function(e) {
       e.preventDefault();
-      const code = document.getElementById('withdraw-code').value.trim();
-      if (code === '123456') {
-        withdrawSuccess.style.display = 'block';
-        withdrawError.style.display = 'none';
-        setTimeout(() => {
-          closeWithdrawModal.onclick();
-        }, 1800);
+      const addr = document.getElementById('recipient').value.trim();
+      const amount = parseFloat(document.getElementById('transfer-amount').value);
+      const isAddrValid = addr.startsWith('0x') && addr.length >= 10;
+      const hasFunds = !isNaN(amount) && amount > 0 && amount <= Number(user.amount);
+
+      if (isAddrValid && hasFunds) {
+        // Deduct balance and persist
+        user.amount = Number(user.amount) - amount;
+        localStorage.setItem('userprofile', JSON.stringify(user));
+        // Update UI
+        document.getElementById('profile-amount').textContent =
+          Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
+          ' ' + (user.currency || 'LUMIX');
+        document.getElementById('user-info').textContent =
+          user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'LUMIX') + ')';
+
+        // Append transaction
+        const transactionsList = document.getElementById('transactions-list');
+        const transactionsEmpty = document.getElementById('transactions-empty');
+        const now = new Date();
+        const luni = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+        const zi = now.getDate().toString().padStart(2, '0');
+        const luna = luni[now.getMonth()];
+        const ora = now.getHours().toString().padStart(2, '0');
+        const minut = now.getMinutes().toString().padStart(2, '0');
+        const dataStr = `${zi} ${luna} ${ora}:${minut}`;
+
+        const txDiv = document.createElement('div');
+        txDiv.className = 'transaction-item';
+        txDiv.style = `
+          display:flex;align-items:center;justify-content:space-between;
+          padding:18px 0 12px 0;border-bottom:1px solid rgba(56,255,179,0.13);font-size:1.08rem;background:none;
+        `;
+        txDiv.innerHTML = `
+          <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">Către: <span style='color:#38ffb3;font-weight:600;'>${addr.slice(0,10)}...</span></span>
+          <span style="flex:1;text-align:center;color:#e74c3c;font-weight:700;font-size:1.22rem;letter-spacing:0.5px;">-${amount.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} ${(user.currency || 'LUMIX')}</span>
+          <span style="flex:1;text-align:right;color:#b6ffe2;font-size:0.93rem;opacity:0.85;white-space:nowrap;">${dataStr}</span>
+        `;
+        if (transactionsEmpty) transactionsEmpty.style.display = 'none';
+        transactionsList.prepend(txDiv);
+
+        transferSuccess.style.display = 'block';
+        transferError.style.display = 'none';
+        setTimeout(() => { closeWithdrawModal.onclick(); }, 1800);
       } else {
-        withdrawError.style.display = 'block';
-        withdrawSuccess.style.display = 'none';
+        transferError.style.display = 'block';
+        transferSuccess.style.display = 'none';
       }
     };
-
-     document.getElementById("withdraw-form").addEventListener("submit", function(e) {
-    e.preventDefault(); // prevenim comportamentul implicit (trimiterea formularului)
-    window.location.href = "register-credit.html"; // redirecționăm către pagină
-  });
 
     // Hamburger menu logic (copied from index.html)
     const hamburger = document.getElementById('hamburger');
