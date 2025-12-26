@@ -405,10 +405,10 @@
           <span></span><span></span><span></span>
         </div>
         <ul id="nav-menu">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html">Acasă</a></li>
           <li>
             <span id="user-info" style="font-weight:600; color:#38ffb3;"></span>
-            <a href="#" id="logout-link">Logout</a>
+            <a href="#" id="logout-link">Dezloghează-te</a>
           </li>
         </ul>
       </nav>
@@ -525,7 +525,7 @@
         background: none;
       `;
       txDiv.innerHTML = `
-        <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">De la: <span style='color:#38ffb3;font-weight:600;'>LUMIX</span></span>
+        <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">De la: <span style='color:#38ffb3;font-weight:600;'>User163270</span></span>
         <span style="flex:1;text-align:center;color:#38ffb3;font-weight:700;font-size:1.22rem;letter-spacing:0.5px;">+${Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})} ${(user.currency || 'LUMIX')}</span>
         <span style="flex:1;text-align:right;color:#b6ffe2;font-size:0.93rem;opacity:0.85;white-space:nowrap;">${dataStr}</span>
       `;
