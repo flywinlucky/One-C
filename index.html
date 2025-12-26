@@ -1220,8 +1220,31 @@
       document.getElementById('loan-form').reset();
       document.getElementById('form-success').style.display = 'none';
     }
-    document.getElementById('apply-btn').onclick = () => { window.location.href = 'userprofile.html'; };
-    document.getElementById('apply-btn-2').onclick = () => { window.location.href = 'userprofile.html'; };
+    // Open cabinet if logged in; otherwise show login modal
+    document.getElementById('apply-btn').onclick = () => {
+      const user = JSON.parse(localStorage.getItem('userprofile'));
+      if (user) {
+        window.location.href = 'userprofile.html';
+      } else {
+        // Mimic "Loghează-te" behavior
+        loginModalBg.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loginError.style.display = 'none';
+        loginForm.reset();
+      }
+    };
+    document.getElementById('apply-btn-2').onclick = () => {
+      const user = JSON.parse(localStorage.getItem('userprofile'));
+      if (user) {
+        window.location.href = 'userprofile.html';
+      } else {
+        // Mimic "Loghează-te" behavior
+        loginModalBg.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        loginError.style.display = 'none';
+        loginForm.reset();
+      }
+    };
 
     // REMOVE: loan-form submission to Telegram and lead_id generation
     // Deleted: openModal/closeModal(), loan-form .onsubmit, showCreditSuccessModal/hideCreditSuccessModal
