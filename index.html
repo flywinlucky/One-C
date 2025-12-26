@@ -910,7 +910,7 @@
           <li><a href="#" id="cabinet-link">Cabinet</a></li>
           <li>
             <span id="user-info" style="display:none; font-weight:600; color:#38ffb3;"></span>
-            <a href="#" id="login-link">Login</a>
+            <a href="#" id="login-link">Loghează-te</a>
             <a href="#" id="logout-link" style="display:none;">Dezloghează-te</a>
           </li>
         </ul>
@@ -1091,7 +1091,7 @@
         <input type="text" id="login-user" name="login-user" required placeholder=" Utilizator">
         <label for="login-pass">Password</label>
         <input type="password" id="login-pass" name="login-pass" required placeholder=" Parolă">
-        <button type="submit" class="btn-primary">Login</button>
+        <button type="submit" class="btn-primary">Loghează-te</button>
       </form>
       <div id="login-error" style="display:none; margin-top:18px; color:#e74c3c; font-weight:600;">
         Utilizator sau parolă incorectă!
@@ -1377,7 +1377,7 @@
           <span class="activity-user">${userId}</span>
           <span class="activity-time">${time}</span>
         </div>
-        <span class="activity-amount">+$${amount.toLocaleString()}</span>
+        <span class="activity-amount">+${amount.toLocaleString()} $</span>
       `;
       
       return item;
