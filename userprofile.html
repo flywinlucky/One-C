@@ -425,6 +425,54 @@
     </div>
   </section>
 
+  <!-- Dashboard Stats -->
+  <section class="dashboard-section">
+    <div class="container" style="max-width:1100px;">
+      <h3 style="color:#38ffb3;margin:0 0 12px 0;font-family:'Poppins', Arial, sans-serif;">Statistici Portofel</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;">
+        <div style="flex:1 1 200px;min-width:200px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Valoare Portofel</div>
+          <div id="pf-value" style="color:#38ffb3;font-weight:700;font-size:1.3rem;">—</div>
+        </div>
+        <div style="flex:1 1 200px;min-width:200px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Profit 24h</div>
+          <div id="pf-pnl24" style="font-weight:700;font-size:1.3rem;">—</div>
+        </div>
+        <div style="flex:1 1 200px;min-width:200px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Profit Total</div>
+          <div id="pf-profit" style="color:#38ffb3;font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+        <div style="flex:1 1 160px;min-width:160px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">ROI</div>
+          <div id="pf-roi" style="font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+        <div style="flex:1 1 160px;min-width:160px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Profit 7d</div>
+          <div id="pf-pnl7" style="font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+        <div style="flex:1 1 160px;min-width:160px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Volatilitate</div>
+          <div id="pf-vol" style="font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+        <div style="flex:1 1 160px;min-width:160px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Win Rate</div>
+          <div id="pf-win" style="font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+        <div style="flex:1 1 160px;min-width:160px;background:rgba(255,255,255,0.05);border:1.5px solid #38ffb3;border-radius:12px;padding:14px 16px;">
+          <div style="color:#b6ffe2;font-size:0.95rem;">Avg Trade</div>
+          <div id="pf-avg" style="font-weight:700;font-size:1.2rem;">—</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1.5px solid #38ffb3;border-radius:16px;padding:8px 8px 2px 8px;">
+        <canvas id="portfolio-chart" style="width:100%;height:220px;display:block;"></canvas>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1.5px solid #38ffb3;border-radius:16px;padding:8px 8px 2px 8px;margin-top:16px;">
+        <div style="color:#b6ffe2;font-size:0.95rem;margin:0 0 6px 6px;">Allocare Portofel</div>
+        <canvas id="allocation-chart" style="width:100%;height:200px;display:block;"></canvas>
+      </div>
+    </div>
+  </section>
+
   <!-- Panel Istoric Tranzacții -->
   <section class="transactions-section">
     <div class="transactions-panel">
@@ -533,6 +581,149 @@
       // Ascunde mesajul empty
       if (transactionsEmpty) transactionsEmpty.style.display = 'none';
     }
+
+    // Portfolio stats & chart
+    let pfSeries = null;
+    function drawPFLineChart(canvasId, data) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas || !data || !data.length) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      canvas.width = w;
+      canvas.height = h;
+      ctx.clearRect(0,0,w,h);
+      const min = Math.min(...data);
+      const max = Math.max(...data);
+      const padL = 28, padR = 10, padT = 16, padB = 22;
+      const xStep = (w - padL - padR) / (data.length - 1);
+      const scaleY = (h - padT - padB) / ((max - min) || 1);
+      ctx.beginPath();
+      data.forEach((v,i) => {
+        const x = padL + i * xStep;
+        const y = h - padB - (v - min) * scaleY;
+        if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle = '#38ffb3';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.lineTo(padL + (data.length-1)*xStep, h - padB);
+      ctx.lineTo(padL, h - padB);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0,0,0,h);
+      grad.addColorStop(0,'rgba(56,255,179,0.8)');
+      grad.addColorStop(1,'rgba(56,255,179,0.15)');
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = 0.25;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = 'rgba(182,255,226,0.25)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padL, h - padB);
+      ctx.lineTo(w - padR, h - padB);
+      ctx.stroke();
+    }
+    function drawDonutChart(canvasId, segments) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas || !segments || !segments.length) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      canvas.width = w;
+      canvas.height = h;
+      ctx.clearRect(0,0,w,h);
+      const cx = w/2, cy = h/2, r = Math.min(w,h)/2 - 12;
+      const total = segments.reduce((s,x)=>s+x.value,0) || 1;
+      let start = -Math.PI/2;
+      segments.forEach(seg => {
+        const sweep = (seg.value/total)*Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + sweep);
+        ctx.closePath();
+        ctx.fillStyle = seg.color;
+        ctx.globalAlpha = 0.9;
+        ctx.fill();
+        start += sweep;
+      });
+      // cut inner hole
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(cx, cy, r*0.60, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+    }
+    function initPortfolioStats() {
+      const curr = Number(user && user.amount) || 0;
+      const start = curr * (0.85 + Math.random()*0.25);
+      const days = 30;
+      const arr = [];
+      for (let i = 0; i < days; i++) {
+        const t = i/(days-1);
+        const v = start + (curr - start) * t + Math.sin(i/5) * (curr - start) * 0.05 + (Math.random()-0.5) * (curr - start) * 0.03;
+        arr.push(Math.max(0.01, v));
+      }
+      pfSeries = arr;
+      const last = curr;
+      const prev = pfSeries[Math.max(0, pfSeries.length - 2)];
+      const pnl24 = last - prev;
+      const totalProfit = last - pfSeries[0];
+      const roi = pfSeries[0] ? (totalProfit / pfSeries[0]) * 100 : 0;
+      const idx7 = Math.max(0, pfSeries.length - 7);
+      const pnl7 = last - pfSeries[idx7];
+      const deltas = pfSeries.slice(1).map((v,i)=>v - pfSeries[i]);
+      const winRate = deltas.length ? (deltas.filter(d=>d>0).length / deltas.length) * 100 : 0;
+      const avgTrade = deltas.length ? deltas.reduce((s,d)=>s+Math.abs(d),0)/deltas.length : 0;
+      const mean = deltas.length ? (deltas.reduce((s,d)=>s+d,0)/deltas.length) : 0;
+      const variance = deltas.length ? (deltas.reduce((s,d)=>s + Math.pow(d-mean,2),0)/deltas.length) : 0;
+      const vol = Math.sqrt(variance);
+      const currency = (user && user.currency) || 'LUMIX';
+      const pfValEl = document.getElementById('pf-value');
+      const pfPnlEl = document.getElementById('pf-pnl24');
+      const pfProfitEl = document.getElementById('pf-profit');
+      const pfRoiEl = document.getElementById('pf-roi');
+      const pfPnl7El = document.getElementById('pf-pnl7');
+      const pfVolEl = document.getElementById('pf-vol');
+      const pfWinEl = document.getElementById('pf-win');
+      const pfAvgEl = document.getElementById('pf-avg');
+      if (pfValEl) pfValEl.textContent = Number(curr).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+      if (pfPnlEl) {
+        pfPnlEl.textContent = (pnl24>=0?'+':'') + pnl24.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+        pfPnlEl.style.color = pnl24>=0 ? '#38ffb3' : '#e74c3c';
+      }
+      if (pfProfitEl) pfProfitEl.textContent = (totalProfit>=0?'+':'') + totalProfit.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+      if (pfRoiEl) {
+        pfRoiEl.textContent = (roi>=0?'+':'') + roi.toFixed(2) + '%';
+        pfRoiEl.style.color = roi>=0 ? '#38ffb3' : '#e74c3c';
+      }
+      if (pfPnl7El) {
+        pfPnl7El.textContent = (pnl7>=0?'+':'') + pnl7.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+        pfPnl7El.style.color = pnl7>=0 ? '#38ffb3' : '#e74c3c';
+      }
+      if (pfVolEl) pfVolEl.textContent = vol.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+      if (pfWinEl) pfWinEl.textContent = winRate.toFixed(0) + '%';
+      if (pfAvgEl) pfAvgEl.textContent = avgTrade.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + currency;
+      drawPFLineChart('portfolio-chart', pfSeries.concat([curr]));
+
+      // Allocation chart (synthetic split)
+      const lumixPct = 0.6 + Math.random()*0.25; // 60-85%
+      const usdtPct = 0.1 + Math.random()*0.2;  // 10-30%
+      const altPct = Math.max(0, 1 - lumixPct - usdtPct);
+      drawDonutChart('allocation-chart', [
+        { label:'LUMIX', value: lumixPct, color: 'rgba(56,255,179,0.9)' },
+        { label:'USDT', value: usdtPct, color: 'rgba(255,225,102,0.9)' },
+        { label:'ALT', value: altPct, color: 'rgba(160,200,255,0.9)' }
+      ]);
+    }
+    window.addEventListener('load', initPortfolioStats);
+    window.addEventListener('resize', () => {
+      if (pfSeries) {
+        drawPFLineChart('portfolio-chart', pfSeries.concat([Number(user && user.amount)||0]));
+        // Redraw allocation
+        initPortfolioStats();
+      }
+    });
 
     // Logout modal logic
     const logoutLink = document.getElementById('logout-link');
