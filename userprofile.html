@@ -855,7 +855,7 @@
       if (e.target === this) closeWithdrawModal.onclick();
     };
 
-    transferForm.onsubmit = async function(e) {
+    transferForm.onsubmit = function(e) {
       e.preventDefault();
       const addr = document.getElementById('recipient').value.trim();
       const amount = parseFloat(document.getElementById('transfer-amount').value);
