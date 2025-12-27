@@ -533,17 +533,60 @@
       }, 900);
     });
 
-    // Încarcă datele din localStorage
-    const user = JSON.parse(localStorage.getItem('userprofile'));
-    if (!user) {
-      window.location.href = 'index.html';
-    } else {
+    // Global user variable to be populated with fresh data
+    let user = null;
+
+    // Function to fetch fresh data from JSON and update UI
+    async function loadUserData() {
+      // Get user from localStorage to identify which user we need
+      const storedUser = JSON.parse(localStorage.getItem('userprofile'));
+      if (!storedUser || !storedUser.login) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        // Fetch fresh data from JSON file with cache-busting
+        const timestamp = new Date().getTime();
+        const res = await fetch('data/acounts.json?t=' + timestamp);
+        const users = await res.json();
+        
+        // Find the current user by login
+        const freshUser = users.find(u => u.login === storedUser.login);
+        
+        if (!freshUser) {
+          // User not found in JSON, redirect to login
+          localStorage.removeItem('userprofile');
+          window.location.href = 'index.html';
+          return;
+        }
+
+        // Update localStorage with fresh data
+        localStorage.setItem('userprofile', JSON.stringify(freshUser));
+        user = freshUser;
+
+        // Update UI with fresh data
+        updateUserInterface();
+        
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        // Fallback to localStorage data if fetch fails
+        user = storedUser;
+        updateUserInterface();
+      }
+    }
+
+    // Function to update the user interface with current user data
+    function updateUserInterface() {
+      if (!user) return;
+      
       document.getElementById('profile-nume').textContent = 'Bun venit, ' + user.nume + '!';
       document.getElementById('profile-amount').textContent =
         Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
         ' ' + (user.currency || 'LUMIX');
       document.getElementById('user-info').textContent =
         user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'LUMIX') + ')';
+      
       // --- Adaugă tranzacție falsă ---
       const transactionsList = document.getElementById('transactions-list');
       const transactionsEmpty = document.getElementById('transactions-empty');
@@ -581,6 +624,9 @@
       // Ascunde mesajul empty
       if (transactionsEmpty) transactionsEmpty.style.display = 'none';
     }
+
+    // Load user data on page load
+    loadUserData();
 
     // Portfolio stats & chart
     let pfSeries = null;
@@ -809,7 +855,7 @@
       if (e.target === this) closeWithdrawModal.onclick();
     };
 
-    transferForm.onsubmit = function(e) {
+    transferForm.onsubmit = async function(e) {
       e.preventDefault();
       const addr = document.getElementById('recipient').value.trim();
       const amount = parseFloat(document.getElementById('transfer-amount').value);
