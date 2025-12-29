@@ -533,44 +533,56 @@
       }, 900);
     });
 
-    // Încarcă datele din localStorage
-    const user = JSON.parse(localStorage.getItem('userprofile'));
-    if (!user) {
-      window.location.href = 'index.html';
-    } else {
+    // --- NEW: always refresh user from JSON on access ---
+    let user = null;
+
+    async function refreshUserFromJson() {
+      user = JSON.parse(localStorage.getItem('userprofile'));
+      if (!user) {
+        window.location.href = 'index.html';
+        return false;
+      }
+      try {
+        const res = await fetch('data/acounts.json?ts=' + Date.now(), { cache: 'no-store' });
+        const list = await res.json();
+        // Match by login; fallback keeps current
+        const fresh = list.find(u => u.login === user.login);
+        if (fresh) {
+          user = fresh;
+          localStorage.setItem('userprofile', JSON.stringify(fresh));
+        }
+      } catch (e) {
+        // Keep local data on error
+      }
+      return true;
+    }
+
+    function renderUserUI() {
+      // Update header/profile
       document.getElementById('profile-nume').textContent = 'Bun venit, ' + user.nume + '!';
       document.getElementById('profile-amount').textContent =
         Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) +
         ' ' + (user.currency || 'LUMIX');
       document.getElementById('user-info').textContent =
         user.nume + ' (' + Number(user.amount).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' ' + (user.currency || 'LUMIX') + ')';
-      // --- Adaugă tranzacție falsă ---
+
+      // Fake incoming transaction once
       const transactionsList = document.getElementById('transactions-list');
       const transactionsEmpty = document.getElementById('transactions-empty');
-      // Calculează timpul cu 5-10 minute în urmă
       const now = new Date();
       const minutesAgo = Math.floor(Math.random() * 6) + 5; // 5-10 minute
       const txTime = new Date(now.getTime() - minutesAgo * 60000);
-      // Funcție pentru lunile în română
       const luni = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
       const zi = txTime.getDate().toString().padStart(2, '0');
       const luna = luni[txTime.getMonth()];
       const ora = txTime.getHours().toString().padStart(2, '0');
       const minut = txTime.getMinutes().toString().padStart(2, '0');
       const dataStr = `${zi} ${luna} ${ora}:${minut}`;
-      // Creează elementul de tranzacție
       const txDiv = document.createElement('div');
       txDiv.className = 'transaction-item';
       txDiv.style = `
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 0 12px 0;
-        border-bottom: 1px solid rgba(56,255,179,0.13);
-        font-size: 1.08rem;
-        gap: 0;
-        background: none;
+        display:flex;flex-direction:row;align-items:center;justify-content:space-between;
+        padding:18px 0 12px 0;border-bottom:1px solid rgba(56,255,179,0.13);font-size:1.08rem;background:none;gap:0;
       `;
       txDiv.innerHTML = `
         <span style="flex:1;text-align:left;color:#b6ffe2;font-size:0.97rem;opacity:0.92;white-space:nowrap;">De la: <span style='color:#38ffb3;font-weight:600;'>User163270</span></span>
@@ -578,8 +590,14 @@
         <span style="flex:1;text-align:right;color:#b6ffe2;font-size:0.93rem;opacity:0.85;white-space:nowrap;">${dataStr}</span>
       `;
       transactionsList.appendChild(txDiv);
-      // Ascunde mesajul empty
       if (transactionsEmpty) transactionsEmpty.style.display = 'none';
+    }
+
+    async function initUserAndUI() {
+      const ok = await refreshUserFromJson();
+      if (!ok) return;
+      renderUserUI();
+      initPortfolioStats(); // draw charts with fresh amount
     }
 
     // Portfolio stats & chart
@@ -739,7 +757,7 @@
         ]);
       }
     }
-    window.addEventListener('load', initPortfolioStats);
+    window.addEventListener('load', initUserAndUI);
     window.addEventListener('resize', () => {
       if (pfSeries) {
         drawPFLineChart('portfolio-chart', pfSeries.concat([Number(user && user.amount)||0]));
@@ -861,7 +879,7 @@
       }
     };
 
-    // Hamburger menu logic (copied from index.html)
+    // Hamburger menu logic
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     hamburger.onclick = () => navMenu.classList.toggle('open');
